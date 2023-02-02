@@ -1,0 +1,38 @@
+classDiagram
+
+EventCalendar <|.. Event: implements
+User <|.. AdminUser: implements
+Event "0" --> "*" User : Association
+User "0" --> "*" EventCalendar : Association
+
+
+
+
+
+
+
+EventCalendar : +EventList
+EventCalendar : +EventListDescription
+EventCalendar: +EventCalendar()
+EventCalendar: +setEventList()
+EventCalendar: +getEventList()
+EventCalendar: +add(obj)Event()
+
+class User{
++UserId
++UserName
++getName()
++setName()
+}
+class Event {
++registerUser(User)
++unregisterUser(User)
++notifyUsers()
++getState()
++setState(Object)
+
+}
+class AdminUser{
++update()
++setEvent(Event)
+}
