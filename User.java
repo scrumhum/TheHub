@@ -1,103 +1,105 @@
-    private class User
+import java.util.Scanner;
+
+public class User
 {
-    private String firstName;
-    private String lastName;
-    private String username;
-    private String password;
-    private int userID; //Will be created automatically after sign up
-    private String gender;
-    private String email;
-    private String bio;
-    private String location;
-    private int phoneNumber;
-    private Object profileImg;
-    private boolean adminStatus; //to authenticate. Not sure if this is entirely necessary
+    public String firstName;
+    public String lastName;
+    public String username;
+    public String password;
+    public int userID; //Will be created automatically after sign up
+    public String gender;
+    public String email;
+    public String bio;
+    public String location;
+    public int phoneNumber;
+    public Object profileImg;
+
+    //public boolean adminStatus; //to authenticate. Not sure if this is entirely necessary
     
 
-    //private static int comMemberCount = 0; // number of objects in memory, keeps track of all users
+    private static int count = 0; // number of objects in memory, keeps track of all users
 
+    public User()
+    {
+        
+    }
 
-     //constructer 
-     public User(String first, String last, String name, String pass, int id, String gender, String email, String bio,String location, int phone, Object img)
-     {
-        firstName = first;
-        lastName = last;
-        username = name;
-        password = pass;
-        userID = id;
-        gender = gender;
-        email = email;
-        bio = bio;
-        location = location;
-        phoneNumber = phone;
-        profileImg = img;
+    public static void profileCreate(User person) {
 
-        //count++; // increment static count of Users
-        //System.out.printf( "User constructor: %s %s; count = %d\n",
-          // firstName, lastName, count);
-     }
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter your First name: ");
+        String firstName = scanner.nextLine();
+        System.out.println("Enter your Last name: ");
+        String lastName = scanner.nextLine();
+        System.out.println("Enter a Username: ");
+        String username = scanner.nextLine();
+        System.out.println("Enter a Password:  ");
+        String password = scanner.nextLine();
+        System.out.println("Enter a User ID: "); //test of concept, won't be user generated
+        String userID = scanner.nextLine();
+        System.out.println("Enter your gender:  ");
+        String gender = scanner.nextLine();
+        System.out.println("Enter your email address:  ");
+        String email = scanner.nextLine();
+        System.out.println("Enter a short bio:  ");
+        String bio = scanner.nextLine();
+        System.out.println("Where are you located?");
+        String location = scanner.nextLine();
+        System.out.println("Whats your Phone number?");
+        String phoneNumber = scanner.nextLine();
 
-     //This maybe removes the user from the count?
-     // subtract 1 from static count when garbage
-     // collector calls finalize to clean up object;
-     // confirm that finalize was called
-     /*protected void finalize()
-     {
-        count--; // decrement static count of users
-        System.out.printf( "User finalizer: %s %s; count = %d\n",
-           firstName, lastName, count );
-     }*/
+    }
 
    // set first name
-     public String setFirstName(String firstName)
+     public void setFirstName(String firstName)
      {
         this.firstName = firstName;
      }
 
      // set last name
-     public String setLastName(String lastName)
+     public void setLastName(String lastName)
      {
         this.lastName = lastName;
      }
 
     // set user name
-     public String setUserName(String name)
+     public void setUserName(String name)
      {
         this.username = name;
      }
 
      // set password
-     public String setPassword(String password)
+     public void setPassword(String password)
      {
         this.password = password;
      }
 
      // set gender
-     public String setGender(String gender)
+     public void setGender(String gender)
      {
         this.gender = gender;
      }
      
     // set email
-     public String setEmail(String email)
+     public void setEmail(String email)
      {
         this.email = email;
      }
      
      // set bio
-     public String setBio(String bio)
+     public void setBio(String bio)
      {
         this.bio = bio;
      }
      
      //set phone number
-     public String setPhone(String phone)
+     public void setPhone(int phone)
      {
         this.phoneNumber = phone;
      }
      
      //set profile image
-     public String setImage(String img)
+     public void setImage(String img)
      {
         this.profileImg = img;
      }
@@ -131,37 +133,37 @@
      // get user id
      public int getUserID()
      {
-        return username;
+        return userID;
      }
 
      // get gender
      public String getGender()
      {
-        this.gender;
+        return this.gender;
      }
      
      // get email
      public String getEmail()
      {
-        this.email;
+        return this.email;
      }
      
      // get bio
      public String getBio()
      {
-        this.bio;
+        return this.bio;
      }
      
      // get phone number
-     public String getPhone()
+     public int getPhone()
      {
-        this.phoneNumber;
+        return this.phoneNumber;
      }
      
      // get profile image
      public Object getImage()
      {
-        this.profileImg;
+        return this.profileImg;
      }
 
      // static method to get static count value
