@@ -170,4 +170,6 @@
         return count;                          
      }
 
+    public void setApproved(boolean b) {
+    }
 }
