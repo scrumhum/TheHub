@@ -4,14 +4,14 @@ import java.util.Scanner;
 public class UserLogin {
 
     // Store all registered users and their passwords in a HashMap
-    static HashMap<String, String> users = new HashMap<>();
+    static HashMap<String, String> dummyUsers = new HashMap<>();
 
 
     //this needs to be converted into an input system for users when they register
     static {
-        users.put("user1", "pass1");
-        users.put("user2", "pass2");
-        users.put("user3", "pass3");
+        dummyUsers.put("user1", "pass1");
+        dummyUsers.put("user2", "pass2");
+        dummyUsers.put("user3", "pass3");
     }
 
     // A class to store user information
@@ -42,7 +42,7 @@ public class UserLogin {
         System.out.print("Password: ");
         String password = input.nextLine();
 
-        if (users.containsKey(username) && users.get(username).equals(password)) {
+        if (dummyUsers.containsKey(username) && dummyUsers.get(username).equals(password)) {
             System.out.println("Login Successful!");
         } else {
             System.out.println("Login Failed!");

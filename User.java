@@ -1,7 +1,6 @@
 import java.util.Scanner;
 
-public class User
-{
+public class User implements UserInterface {
     public String firstName;
     public String lastName;
     public String username;
@@ -10,6 +9,7 @@ public class User
     public String gender;
     public String email;
     public String bio;
+
     public String location;
     public int phoneNumber;
     public Object profileImg;
@@ -19,157 +19,137 @@ public class User
 
     private static int count = 0; // number of objects in memory, keeps track of all users
 
-    public User()
-    {
+    public User() {
         
     }
 
-    public static void profileCreate(User person) {
+    public void profileCreate() {
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your First name: ");
-        String firstName = scanner.nextLine();
+        this.firstName = scanner.nextLine();
         System.out.println("Enter your Last name: ");
-        String lastName = scanner.nextLine();
+        this.lastName = scanner.nextLine();
         System.out.println("Enter a Username: ");
-        String username = scanner.nextLine();
+        this.username = scanner.nextLine();
         System.out.println("Enter a Password:  ");
-        String password = scanner.nextLine();
+        this.password = scanner.nextLine();
         System.out.println("Enter a User ID: "); //test of concept, won't be user generated
-        String userID = scanner.nextLine();
+        this.userID = scanner.nextInt();
         System.out.println("Enter your gender:  ");
-        String gender = scanner.nextLine();
+        this.gender = scanner.nextLine();
         System.out.println("Enter your email address:  ");
-        String email = scanner.nextLine();
+        this.email = scanner.nextLine();
         System.out.println("Enter a short bio:  ");
-        String bio = scanner.nextLine();
+        this.bio = scanner.nextLine();
         System.out.println("Where are you located?");
-        String location = scanner.nextLine();
+        this.location = scanner.nextLine();
         System.out.println("Whats your Phone number?");
-        String phoneNumber = scanner.nextLine();
+        this.phoneNumber = scanner.nextInt();
+
+        User person = new User();
+        User.profileCreate(person);
+        System.out.println(person.getEmail());
 
     }
 
-   // set first name
-     public void setFirstName(String firstName)
-     {
-        this.firstName = firstName;
-     }
-
-     // set last name
-     public void setLastName(String lastName)
-     {
-        this.lastName = lastName;
-     }
-
-    // set user name
-     public void setUserName(String name)
-     {
-        this.username = name;
-     }
-
-     // set password
-     public void setPassword(String password)
-     {
-        this.password = password;
-     }
-
-     // set gender
-     public void setGender(String gender)
-     {
-        this.gender = gender;
-     }
-     
-    // set email
-     public void setEmail(String email)
-     {
-        this.email = email;
-     }
-     
-     // set bio
-     public void setBio(String bio)
-     {
-        this.bio = bio;
-     }
-     
-     //set phone number
-     public void setPhone(int phone)
-     {
-        this.phoneNumber = phone;
-     }
-     
-     //set profile image
-     public void setImage(String img)
-     {
-        this.profileImg = img;
-     }
-
-
-
     // get username
-     public String getUserName()
-     {
+     public String getUserName() {
         return username;
      }
 
      // get password
-     public String getPassword()
-     {
+     public String getPassword() {
         return password;
      }
 
     // get first name
-     public String getFirstName()
-     {
+     public String getFirstName() {
         return firstName;
      }
 
      // get last name
-     public String getLastName()
-     {
+     public String getLastName() {
         return lastName;
      }
      
      // get user id
-     public int getUserID()
-     {
+     public int getUserID() {
         return userID;
      }
 
      // get gender
-     public String getGender()
-     {
+     public String getGender() {
         return this.gender;
      }
      
      // get email
-     public String getEmail()
-     {
+     public String getEmail() {
         return this.email;
      }
      
      // get bio
-     public String getBio()
-     {
+     public String getBio() {
         return this.bio;
      }
      
      // get phone number
-     public int getPhone()
-     {
+     public int getPhone() {
         return this.phoneNumber;
      }
      
      // get profile image
-     public Object getImage()
-     {
+     public Object getImage() {
         return this.profileImg;
      }
 
      // static method to get static count value
-     public static int getMemberCount()              
-     {                                         
+     public static int getMemberCount() {
         return count;                          
      }
 
+    @Override
+    public String setFirstName() {
+        return null;
+    }
+
+    @Override
+    public String setLastName() {
+        return null;
+    }
+
+    @Override
+    public String setUserName() {
+        return null;
+    }
+
+    @Override
+    public String setPassword() {
+        return null;
+    }
+
+    @Override
+    public String setGender() {
+        return null;
+    }
+
+    @Override
+    public String setEmail() {
+        return null;
+    }
+
+    @Override
+    public String setBio() {
+        return null;
+    }
+
+    @Override
+    public int setPhone() {
+        return 0;
+    }
+
+    @Override
+    public Object setImage() {
+        return null;
+    }
 }

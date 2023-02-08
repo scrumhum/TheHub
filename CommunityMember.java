@@ -39,139 +39,117 @@
 
          // set first name
      }
-     public void setFirstName(String firstName)
-     {
+     public void setFirstName(String firstName) {
         this.firstName = firstName;
      }
 
      // set last name
-     public void setLastName(String lastName)
-     {
+     public void setLastName(String lastName) {
         this.lastName = lastName;
      }
 
     // set user name
-     public void setUserName(String name)
-     {
+     public void setUserName(String name) {
         this.username = name;
      }
 
      // set password
-     public void setPassword(String password)
-     {
+     public void setPassword(String password) {
         this.password = password;
      }
 
      // set gender
-     public void setGender(String gender)
-     {
+     public void setGender(String gender) {
         this.gender = gender;
      }
      
     // set email
-     public void setEmail(String email)
-     {
+     public void setEmail(String email) {
         this.email = email;
      }
      
      // set bio
-     public void setBio(String bio)
-     {
+     public void setBio(String bio) {
         this.bio = bio;
      }
      
      //set phone number
-     public void setPhone(int phone)
-     {
+     public void setPhone(int phone) {
         this.phoneNumber = phone;
      }
      
      //set profile image
-     public void setImage(String img)
-     {
+     public void setImage(String img) {
         this.profileImg = img;
      }
      
      //set volunteer status
-     public void setVolunteerStatus(boolean volunteer)
-     {
+     public void setVolunteerStatus(boolean volunteer) {
         this.volunteerStatus = volunteer;
      }
 
 
 
     // get username
-     public String getUserName()
-     {
+     public String getUserName() {
         return username;
      }
 
      // get password
-     public String getPassword()
-     {
+     public String getPassword() {
         return password;
      }
 
     // get first name
-     public String getFirstName()
-     {
+     public String getFirstName() {
         return firstName;
      }
 
      // get last name
-     public String getLastName()
-     {
+     public String getLastName() {
         return lastName;
      }
      
      // get user id
-     public int getUserID()
-     {
+     public int getUserID() {
         return userID;
      }
      
 
      // get gender
-     public String getGender()
-     {
+     public String getGender() {
          return this.gender;
      }
      
      // get email
-     public String getEmail()
-     {
+     public String getEmail() {
         return this.email;
      }
      
      // get bio
-     public String getBio()
-     {
+     public String getBio() {
         return this.bio;
      }
      
      // get phone number
-     public int getPhone()
-     {
+     public int getPhone() {
         return this.phoneNumber;
      }
      
      // get profile image
-     public Object getImage()
-     {
+     public Object getImage() {
         return this.profileImg;
      }
 
 
     // get volunteer status
-    public boolean getVolunteerStatus()
-     {
+    public boolean getVolunteerStatus() {
        return this.volunteerStatus;
      }
 
 
      // static method to get static count value
-     public static int getComMemberCount()              
-     {                                         
+     public static int getComMemberCount() {
         return comMemberCount;
      }
 
