@@ -1,5 +1,8 @@
 public interface UserInterface {
 
+
+    //AT THIS POINT, NONE OF MY SETTERS WORK!!!
+
     String setFirstName();
 
     String setLastName();
@@ -28,11 +31,15 @@ public interface UserInterface {
 
     String getPassword();
 
+    //int getUserID(); //Needs to be updated to get primary Key
+
     String getGender();
 
     String getEmail();
 
     String getBio();
+
+    int getAuthorizationLevel();
 
     int getPhone();
 

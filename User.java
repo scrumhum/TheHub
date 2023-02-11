@@ -5,7 +5,12 @@ public class User implements UserInterface {
     public String lastName;
     public String username;
     public String password;
-    public int userID; //Will be created automatically after sign up
+
+
+    //public int userID = 0; //This is actually not necessary and will be created when the users get added to the DB.
+    //UserID will basically just be the primary key.
+
+
     public String gender;
     public String email;
     public String bio;
@@ -14,69 +19,76 @@ public class User implements UserInterface {
     public int phoneNumber;
     public Object profileImg;
 
-    //public boolean adminStatus; //to authenticate. Not sure if this is entirely necessary
-    
-
-    private static int count = 0; // number of objects in memory, keeps track of all users
+    public int authorizationLevel;
 
     public User() {
-        
+        Scanner sc = new Scanner(System.in);
+
+
+        //This is only a placeholder, as I think that it might be better to create an enum that handles role assignment.
+        //Also it glitches out if you select 2 for Gathering Manager. :(
+        System.out.print("Joining as Community Member? Press 1.\nJoining as a Gathering Manager? Press 2.");
+        if (sc.nextInt() == 1) {
+            this.authorizationLevel = 0;
+        } else if (sc.nextInt() == 2) {
+            this.authorizationLevel = 1;
+        } else {
+            System.out.println("LIKE I SAID, enter either a 1 or a 2. NO FUNNY STUFF");
+        }
+        sc.nextLine();
+
+        System.out.print("Enter your First Name: ");
+        this.firstName = sc.nextLine();
+        System.out.print("Enter your Last Name: ");
+        this.lastName = sc.nextLine();
+        System.out.print("Enter your Username: ");
+        this.username = sc.nextLine();
+        System.out.print("Enter your Password: ");
+        this.password = sc.nextLine();
+
+        //System.out.print("Enter your User ID: ");
+        //this.userID = sc.nextInt();  // When this is left to be created by the user, it causes the program to skip over the gender section.
+
+        System.out.print("Enter your Gender: ");
+        this.gender = sc.nextLine();
+        System.out.print("Enter your Email: ");
+        this.email = sc.nextLine();
+        System.out.print("Enter a short Biography: ");
+        this.bio = sc.nextLine();
+        System.out.print("Enter your location: ");
+        this.location = sc.nextLine();
+        System.out.print("Enter your Phone Number: ");
+        this.phoneNumber = sc.nextInt();
+        //sc.close(); //I believe this is necessary, but it causes a runtime error when it isn't commented out.
+
     }
 
-    public void profileCreate() {
 
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter your First name: ");
-        this.firstName = scanner.nextLine();
-        System.out.println("Enter your Last name: ");
-        this.lastName = scanner.nextLine();
-        System.out.println("Enter a Username: ");
-        this.username = scanner.nextLine();
-        System.out.println("Enter a Password:  ");
-        this.password = scanner.nextLine();
-        System.out.println("Enter a User ID: "); //test of concept, won't be user generated
-        this.userID = scanner.nextInt();
-        System.out.println("Enter your gender:  ");
-        this.gender = scanner.nextLine();
-        System.out.println("Enter your email address:  ");
-        this.email = scanner.nextLine();
-        System.out.println("Enter a short bio:  ");
-        this.bio = scanner.nextLine();
-        System.out.println("Where are you located?");
-        this.location = scanner.nextLine();
-        System.out.println("Whats your Phone number?");
-        this.phoneNumber = scanner.nextInt();
-
-        User person = new User();
-        User.profileCreate(person);
-        System.out.println(person.getEmail());
-
-    }
 
     // get username
      public String getUserName() {
-        return username;
+        return this.username;
      }
 
      // get password
      public String getPassword() {
-        return password;
+        return this.password;
      }
 
     // get first name
      public String getFirstName() {
-        return firstName;
+        return this.firstName;
      }
 
      // get last name
      public String getLastName() {
-        return lastName;
+        return this.lastName;
      }
      
      // get user id
-     public int getUserID() {
+     /*public int getUserID() {
         return userID;
-     }
+     }*/  //Should be changed to have it return the primary key.
 
      // get gender
      public String getGender() {
@@ -97,19 +109,21 @@ public class User implements UserInterface {
      public int getPhone() {
         return this.phoneNumber;
      }
-     
+
+    public int getAuthorizationLevel() {
+        return this.authorizationLevel;
+    }
+
      // get profile image
      public Object getImage() {
         return this.profileImg;
      }
 
-     // static method to get static count value
-     public static int getMemberCount() {
-        return count;                          
-     }
+     //AT THIS POINT, NONE OF MY SETTERS WORK!!!
 
     @Override
     public String setFirstName() {
+        this.firstName = firstName;
         return null;
     }
 
