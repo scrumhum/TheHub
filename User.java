@@ -1,33 +1,28 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
 import java.util.Scanner;
 
 public class User implements UserInterface {
-    public String firstName;
-    public String lastName;
-    public String username;
-    public String password;
-
-
-    //public int userID = 0; //This is actually not necessary and will be created when the users get added to the DB.
-    //UserID will basically just be the primary key.
-
-
-    public String gender;
-    public String email;
-    public String bio;
-
-    public String location;
-    public int phoneNumber;
+    public String firstName, lastName, username, password, gender, email, bio, location;
+    
+    //DON'T CHANGE THIS TO AN INT, IT WILL CAUSES A BUG IN THE SCANNER
+    public String phoneNumber;
     public Object profileImg;
-
     public int authorizationLevel;
+
+    private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
+    private static final String URL = "jdbc:mysql://localhost:3306/thehub";
+    private static final String USER = "root";
+    private static final String PASS = "TheHub";
+
 
     public User() {
         Scanner sc = new Scanner(System.in);
 
-
         //This is only a placeholder, as I think that it might be better to create an enum that handles role assignment.
         //Also it glitches out if you select 2 for Gathering Manager. :(
-        System.out.print("Joining as Community Member? Press 1.\nJoining as a Gathering Manager? Press 2.");
+        /*System.out.print("Joining as Community Member? Press 1.\nJoining as a Gathering Manager? Press 2.");
         if (sc.nextInt() == 1) {
             this.authorizationLevel = 0;
         } else if (sc.nextInt() == 2) {
@@ -35,35 +30,74 @@ public class User implements UserInterface {
         } else {
             System.out.println("LIKE I SAID, enter either a 1 or a 2. NO FUNNY STUFF");
         }
-        sc.nextLine();
+        sc.nextLine();*/
+
+        // TODO all of this needs to be cleaned before being processed. No special characters (periods are OK) and all lowercase. no trailing or leading deadspace.
 
         System.out.print("Enter your First Name: ");
         this.firstName = sc.nextLine();
         System.out.print("Enter your Last Name: ");
         this.lastName = sc.nextLine();
         System.out.print("Enter your Username: ");
+        // TODO need to check for duplicate names in DB before entering.
         this.username = sc.nextLine();
         System.out.print("Enter your Password: ");
+        // TODO need to hash passwords before storing
         this.password = sc.nextLine();
-
-        //System.out.print("Enter your User ID: ");
-        //this.userID = sc.nextInt();  // When this is left to be created by the user, it causes the program to skip over the gender section.
-
         System.out.print("Enter your Gender: ");
         this.gender = sc.nextLine();
         System.out.print("Enter your Email: ");
+        // TODO Need to require proper formatting and also check for duplicates in the DB
         this.email = sc.nextLine();
         System.out.print("Enter a short Biography: ");
         this.bio = sc.nextLine();
         System.out.print("Enter your location: ");
         this.location = sc.nextLine();
         System.out.print("Enter your Phone Number: ");
-        this.phoneNumber = sc.nextInt();
-        //sc.close(); //I believe this is necessary, but it causes a runtime error when it isn't commented out.
+        this.phoneNumber = sc.nextLine();
+        sc.close();
+
+        Connection conn = null;
+        Statement st = null;
+        try {
+            conn = DriverManager.getConnection(URL,USER,PASS);
+            st = conn.createStatement();
+            Class.forName(DRIVER);
+            System.out.println("Connecting to database...");
+
+            //TODO need to write commands to get to database
+            String sql = "USE thehub;";
+            st.executeUpdate(sql);
+
+            System.out.println("Writing profile to database...");
+            String sql2 = "INSERT INTO profiles (firstname, lastname, username, password, gender, email, bio, location, phone_number) " +
+                    "VALUES ('" + this.firstName + "', '" + this.lastName + "', '" + this.username + "', '" + this.password + "', '" + this.gender + "', '" + this.email + "', '" + this.bio + "', '" + this.location + "', '" + this.phoneNumber + "');";
+            st.executeUpdate(sql2);
+            System.out.println("Record inserted successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
     }
 
+    /*public void writeProfile() {
+        Connection conn = null;
+        PreparedStatement pst = null;
+        try {
+            Class.forName(DRIVER);
+            System.out.println("Connecting to database...");
+            conn = DriverManager.getConnection(URL, USER, PASS);
 
+            System.out.println("Writing profile to database...");
+            String sql = "INSERT INTO profiles (firstname, lastname, username, password, gender, email, bio, location, phone_number) " +
+                    "VALUES ('" + this.firstName + "', '" + this.lastName + "', '" + this.username + "', '" + this.password + "', '" + this.gender + "', '" + this.email + "', '" + this.bio + "', '" + this.location + "', '" + this.phoneNumber + "')";
+            pst.executeUpdate(sql);
+            System.out.println("Record inserted successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }*/
 
     // get username
      public String getUserName() {
@@ -88,7 +122,7 @@ public class User implements UserInterface {
      // get user id
      /*public int getUserID() {
         return userID;
-     }*/  //Should be changed to have it return the primary key.
+     }  //Should be changed to have it return the primary key.*/
 
      // get gender
      public String getGender() {
@@ -106,7 +140,7 @@ public class User implements UserInterface {
      }
      
      // get phone number
-     public int getPhone() {
+     public String getPhone() {
         return this.phoneNumber;
      }
 
@@ -166,4 +200,4 @@ public class User implements UserInterface {
     public Object setImage() {
         return null;
     }
-}
+    }

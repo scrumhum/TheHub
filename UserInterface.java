@@ -1,6 +1,5 @@
 public interface UserInterface {
 
-
     //AT THIS POINT, NONE OF MY SETTERS WORK!!!
 
     String setFirstName();
@@ -41,7 +40,7 @@ public interface UserInterface {
 
     int getAuthorizationLevel();
 
-    int getPhone();
+    String getPhone();
 
     Object getImage();
 
