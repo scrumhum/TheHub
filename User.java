@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class User implements UserInterface {
     public String firstName, lastName, username, password, gender, email, bio, location;
-    
+
     //DON'T CHANGE THIS TO AN INT, IT WILL CAUSES A BUG IN THE SCANNER
     public String phoneNumber;
     public Object profileImg;
@@ -15,7 +15,7 @@ public class User implements UserInterface {
     private static final String URL = "jdbc:mysql://localhost:3306/thehub";
     private static final String USER = "root";
     private static final String PASS = "TheHub";
-
+        profileImg = img;
 
     public User() {
         Scanner sc = new Scanner(System.in);
@@ -81,23 +81,7 @@ public class User implements UserInterface {
 
     }
 
-    /*public void writeProfile() {
-        Connection conn = null;
-        PreparedStatement pst = null;
-        try {
-            Class.forName(DRIVER);
-            System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection(URL, USER, PASS);
 
-            System.out.println("Writing profile to database...");
-            String sql = "INSERT INTO profiles (firstname, lastname, username, password, gender, email, bio, location, phone_number) " +
-                    "VALUES ('" + this.firstName + "', '" + this.lastName + "', '" + this.username + "', '" + this.password + "', '" + this.gender + "', '" + this.email + "', '" + this.bio + "', '" + this.location + "', '" + this.phoneNumber + "')";
-            pst.executeUpdate(sql);
-            System.out.println("Record inserted successfully");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }*/
 
     // get username
      public String getUserName() {
