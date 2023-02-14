@@ -16,11 +16,14 @@ public class GatheringManager extends User{
 
     }
 
+
+    /*
+    //TODO Need to create methods for setGathering & getGathering
     public void addGathering() {
         setGathering(getGathering().add(new Gathering()));
     }
 
     public void removeGathering(Gathering gathering) {
         setGathering(getGathering().remove(gathering));
-    }
+    }*/
 }

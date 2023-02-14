@@ -15,7 +15,6 @@ public class User implements UserInterface {
     private static final String URL = "jdbc:mysql://localhost:3306/thehub";
     private static final String USER = "root";
     private static final String PASS = "TheHub";
-        profileImg = img;
 
     public User() {
         Scanner sc = new Scanner(System.in);
