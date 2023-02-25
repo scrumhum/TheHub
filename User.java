@@ -6,21 +6,25 @@ import java.util.Scanner;
 public class User implements UserInterface {
     public String firstName, lastName, username, password, gender, email, bio, location;
 
-    //DON'T CHANGE THIS TO AN INT, IT WILL CAUSES A BUG IN THE SCANNER
+    //DON'T CHANGE THIS TO AN INT, IT WILL CAUSE A BUG IN THE SCANNER
     public String phoneNumber;
     public Object profileImg;
     public int authorizationLevel;
-
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final String URL = "jdbc:mysql://localhost:3306/thehub";
     private static final String USER = "root";
     private static final String PASS = "TheHub";
 
+    Scanner sc = new Scanner(System.in);
+
+    Connection conn = null;
+    Statement st = null;
+
+
     public User() {
-        Scanner sc = new Scanner(System.in);
 
         //This is only a placeholder, as I think that it might be better to create an enum that handles role assignment.
-        //Also it glitches out if you select 2 for Gathering Manager. :(
+        //Also, it glitches out if you select 2 for Gathering Manager. :(
         /*System.out.print("Joining as Community Member? Press 1.\nJoining as a Gathering Manager? Press 2.");
         if (sc.nextInt() == 1) {
             this.authorizationLevel = 0;
@@ -31,42 +35,72 @@ public class User implements UserInterface {
         }
         sc.nextLine();*/
 
-        // TODO all of this needs to be cleaned before being processed. No special characters (periods are OK) and all lowercase. no trailing or leading deadspace.
-
         System.out.print("Enter your First Name: ");
-        this.firstName = sc.nextLine();
+        this.firstName = sc.nextLine().trim().toLowerCase();
         System.out.print("Enter your Last Name: ");
-        this.lastName = sc.nextLine();
+        this.lastName = sc.nextLine().trim().toLowerCase();
         System.out.print("Enter your Username: ");
         // TODO need to check for duplicate names in DB before entering.
-        this.username = sc.nextLine();
+        this.username = sc.nextLine().trim().toLowerCase();
         System.out.print("Enter your Password: ");
         // TODO need to hash passwords before storing
-        this.password = sc.nextLine();
+        this.password = sc.nextLine().trim().toLowerCase();
         System.out.print("Enter your Gender: ");
-        this.gender = sc.nextLine();
+        this.gender = sc.nextLine().trim().toLowerCase();
         System.out.print("Enter your Email: ");
-        // TODO Need to require proper formatting and also check for duplicates in the DB
-        this.email = sc.nextLine();
-        System.out.print("Enter a short Biography: ");
-        this.bio = sc.nextLine();
-        System.out.print("Enter your location: ");
-        this.location = sc.nextLine();
-        System.out.print("Enter your Phone Number: ");
-        this.phoneNumber = sc.nextLine();
-        sc.close();
+        // TODO Need to check for duplicates in the DB
+        this.email = sc.nextLine().trim().toLowerCase();
 
-        Connection conn = null;
-        Statement st = null;
+        //validates email formatting
+        if (isValidEmail(email)) {
+            System.out.println("Valid email");
+        }
+
+        //validates email formatting
+        if (!isValidEmail(email)) {
+            System.out.println("Invalid email. Please enter a valid email:");
+            this.email = sc.nextLine().trim().toLowerCase();
+        }
+
+        System.out.print("Enter a short Biography: ");
+        this.bio = sc.nextLine().trim().toLowerCase();
+        System.out.print("Enter your location: ");
+        this.location = sc.nextLine().trim().toLowerCase();
+        System.out.print("Enter your Phone Number: ");
+        this.phoneNumber = sc.nextLine().trim().toLowerCase();
+
+        writeProfile();
+
+
+    }
+
+    //validates email formatting
+    public boolean isValidEmail(String email) {
+        String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+        java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
+        java.util.regex.Matcher m = p.matcher(email);
+        return m.matches();
+    }
+
+
+    public void databaseConnect() {
         try {
-            conn = DriverManager.getConnection(URL,USER,PASS);
+            conn = DriverManager.getConnection(URL, USER, PASS);
             st = conn.createStatement();
             Class.forName(DRIVER);
             System.out.println("Connecting to database...");
-
-            //TODO need to write commands to get to database
             String sql = "USE thehub;";
             st.executeUpdate(sql);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void writeProfile() {
+        try {
+
+            databaseConnect();
 
             System.out.println("Writing profile to database...");
             String sql2 = "INSERT INTO profiles (firstname, lastname, username, password, gender, email, bio, location, phone_number) " +
@@ -76,111 +110,252 @@ public class User implements UserInterface {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
 
-
     // get username
-     public String getUserName() {
+    public String getUserName() {
         return this.username;
-     }
+    }
 
-     // get password
-     public String getPassword() {
+    // get password
+    public String getPassword() {
         return this.password;
-     }
+    }
 
     // get first name
-     public String getFirstName() {
+    public String getFirstName() {
         return this.firstName;
-     }
+    }
 
-     // get last name
-     public String getLastName() {
+    // get last name
+    public String getLastName() {
         return this.lastName;
-     }
-     
-     // get user id
+    }
+
+    // get user id
      /*public int getUserID() {
         return userID;
      }  //Should be changed to have it return the primary key.*/
 
-     // get gender
-     public String getGender() {
+    // get gender
+    public String getGender() {
         return this.gender;
-     }
-     
-     // get email
-     public String getEmail() {
+    }
+
+    // get email
+    public String getEmail() {
         return this.email;
-     }
-     
-     // get bio
-     public String getBio() {
+    }
+
+    // get bio
+    public String getBio() {
         return this.bio;
-     }
-     
-     // get phone number
-     public String getPhone() {
+    }
+
+    // get phone number
+    public String getPhone() {
         return this.phoneNumber;
-     }
+    }
 
     public int getAuthorizationLevel() {
         return this.authorizationLevel;
     }
 
-     // get profile image
-     public Object getImage() {
+    // get profile image
+    public Object getImage() {
         return this.profileImg;
-     }
-
-     //AT THIS POINT, NONE OF MY SETTERS WORK!!!
+    }
 
     @Override
     public String setFirstName() {
-        this.firstName = firstName;
+        try {
+
+            databaseConnect();
+
+            System.out.print("Enter your First Name: ");
+            this.firstName = sc.nextLine();
+            System.out.print("Enter your Email: ");
+            this.email = sc.nextLine();
+
+            //TODO need to update clause to reflect user's current log in or something like that.
+            String sql2 = "UPDATE profiles SET firstname='" +
+                    this.firstName + "' WHERE email='" + this.email + "';";
+
+            st.executeUpdate(sql2);
+            System.out.println("Record adjusted successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
     @Override
     public String setLastName() {
+        try {
+
+            databaseConnect();
+
+            System.out.print("Enter your Last Name: ");
+            this.lastName = sc.nextLine();
+            System.out.print("Enter your Email: ");
+            this.email = sc.nextLine();
+
+
+            //TODO need to update clause to reflect user's current log in or something like that.
+            String sql2 = "UPDATE profiles SET lastname='" +
+                    this.lastName + "' WHERE email='" + this.email + "';";
+
+            st.executeUpdate(sql2);
+            System.out.println("Record adjusted successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
     @Override
     public String setUserName() {
+        try {
+
+            databaseConnect();
+
+            System.out.print("Enter your Username: ");
+            this.username = sc.nextLine();
+            System.out.print("Enter your Email: ");
+            this.email = sc.nextLine();
+
+
+            //TODO need to update clause to reflect user's current log in or something like that.
+            String sql2 = "UPDATE profiles SET username='" +
+                    this.username + "' WHERE email='" + this.email + "';";
+
+            st.executeUpdate(sql2);
+            System.out.println("Record adjusted successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
     @Override
     public String setPassword() {
+        try {
+
+            databaseConnect();
+
+            System.out.print("Enter your Password: ");
+            this.password = sc.nextLine();
+            System.out.print("Enter your Email: ");
+            this.email = sc.nextLine();
+
+            //TODO need to update clause to reflect user's current log in or something like that.
+            String sql2 = "UPDATE profiles SET password='" +
+                    this.password + "' WHERE email='" + this.email + "';";
+
+            st.executeUpdate(sql2);
+            System.out.println("Record adjusted successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
     @Override
     public String setGender() {
+        try {
+
+            databaseConnect();
+
+            System.out.print("Enter your Gender: ");
+            this.gender = sc.nextLine();
+            System.out.print("Enter your Email: ");
+            this.email = sc.nextLine();
+
+            //TODO need to update clause to reflect user's current log in or something like that.
+            String sql2 = "UPDATE profiles SET gender='" +
+                    this.gender + "' WHERE email='" + this.email + "';";
+
+            st.executeUpdate(sql2);
+            System.out.println("Record adjusted successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
     @Override
     public String setEmail() {
+        try {
+
+            databaseConnect();
+
+            System.out.print("Enter your Email: ");
+            this.email = sc.nextLine();
+            System.out.print("Enter your Username: ");
+            this.username = sc.nextLine();
+
+            //TODO need to update clause to reflect user's current log in or something like that.
+            String sql2 = "UPDATE profiles SET email='" +
+                    this.email + "' WHERE username='" + this.username + "';";
+
+            st.executeUpdate(sql2);
+            System.out.println("Record adjusted successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
     @Override
     public String setBio() {
+        try {
+
+            databaseConnect();
+
+            System.out.print("Enter your Biography: ");
+            this.bio = sc.nextLine();
+            System.out.print("Enter your Email: ");
+            this.email = sc.nextLine();
+
+            //TODO need to update clause to reflect user's current log in or something like that.
+            String sql2 = "UPDATE profiles SET bio='" +
+                    this.bio + "' WHERE email='" + this.email + "';";
+
+            st.executeUpdate(sql2);
+            System.out.println("Record adjusted successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
     @Override
     public int setPhone() {
+        try {
+
+            databaseConnect();
+
+            System.out.print("Enter your Phone Number: ");
+            this.phoneNumber = sc.nextLine();
+            System.out.print("Enter your Email: ");
+            this.email = sc.nextLine();
+
+            //TODO need to update clause to reflect user's current log in or something like that.
+            String sql2 = "UPDATE profiles SET phone_number='" +
+                    this.phoneNumber + "' WHERE email='" + this.email + "';";
+
+            st.executeUpdate(sql2);
+            System.out.println("Record adjusted successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return 0;
     }
 
+    //Images not utilized yet
     @Override
     public Object setImage() {
         return null;
     }
-    }
+}
