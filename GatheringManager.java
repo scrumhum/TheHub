@@ -50,3 +50,4 @@ import java.util.List;
             this.gatherings = gatherings;
         }
     }
+//
