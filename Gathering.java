@@ -18,7 +18,7 @@ public class Gathering {
 
     Date gatheringDate;
 
-    User<User> volunteers = new ArrayList<User>();
+    //User<User> volunteers = new ArrayList<User>();
 
     Location gatheringLocation = new Location() {
         @Override
