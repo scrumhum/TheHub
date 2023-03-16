@@ -1,5 +1,3 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.Statement;
 import java.util.Scanner;
 
@@ -10,16 +8,9 @@ public class User implements UserInterface {
     public String phoneNumber;
     public Object profileImg;
     public int authorizationLevel;
-    private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static final String URL = "jdbc:mysql://localhost:3306/thehub";
-    private static final String USER = "root";
-    private static final String PASS = "TheHub";
-
     Scanner sc = new Scanner(System.in);
-
-    Connection conn = null;
+    DBConnect connect = new DBConnect();
     Statement st = null;
-
 
     public User() {
 
@@ -82,30 +73,16 @@ public class User implements UserInterface {
         return m.matches();
     }
 
-
-    public void databaseConnect() {
-        try {
-            conn = DriverManager.getConnection(URL, USER, PASS);
-            st = conn.createStatement();
-            Class.forName(DRIVER);
-            System.out.println("Connecting to database...");
-            String sql = "USE thehub;";
-            st.executeUpdate(sql);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
     public void writeProfile() {
         try {
 
-            databaseConnect();
+            connect.dbConnect();
+
 
             System.out.println("Writing profile to database...");
-            String sql2 = "INSERT INTO profiles (firstname, lastname, username, password, gender, email, bio, location, phone_number) " +
+            String sql = "INSERT INTO profiles (firstname, lastname, username, password, gender, email, bio, location, phone_number) " +
                     "VALUES ('" + this.firstName + "', '" + this.lastName + "', '" + this.username + "', '" + this.password + "', '" + this.gender + "', '" + this.email + "', '" + this.bio + "', '" + this.location + "', '" + this.phoneNumber + "');";
-            st.executeUpdate(sql2);
+            st.executeUpdate(sql);
             System.out.println("Record inserted successfully");
         } catch (Exception e) {
             e.printStackTrace();
@@ -171,7 +148,7 @@ public class User implements UserInterface {
     public String setFirstName() {
         try {
 
-            databaseConnect();
+            connect.dbConnect();
 
             System.out.print("Enter your First Name: ");
             this.firstName = sc.nextLine();
@@ -194,7 +171,7 @@ public class User implements UserInterface {
     public String setLastName() {
         try {
 
-            databaseConnect();
+            connect.dbConnect();
 
             System.out.print("Enter your Last Name: ");
             this.lastName = sc.nextLine();
@@ -218,7 +195,7 @@ public class User implements UserInterface {
     public String setUserName() {
         try {
 
-            databaseConnect();
+            connect.dbConnect();
 
             System.out.print("Enter your Username: ");
             this.username = sc.nextLine();
@@ -242,7 +219,7 @@ public class User implements UserInterface {
     public String setPassword() {
         try {
 
-            databaseConnect();
+            connect.dbConnect();
 
             System.out.print("Enter your Password: ");
             this.password = sc.nextLine();
@@ -265,7 +242,7 @@ public class User implements UserInterface {
     public String setGender() {
         try {
 
-            databaseConnect();
+            connect.dbConnect();
 
             System.out.print("Enter your Gender: ");
             this.gender = sc.nextLine();
@@ -288,7 +265,7 @@ public class User implements UserInterface {
     public String setEmail() {
         try {
 
-            databaseConnect();
+            connect.dbConnect();
 
             System.out.print("Enter your Email: ");
             this.email = sc.nextLine();
@@ -311,7 +288,7 @@ public class User implements UserInterface {
     public String setBio() {
         try {
 
-            databaseConnect();
+            connect.dbConnect();
 
             System.out.print("Enter your Biography: ");
             this.bio = sc.nextLine();
@@ -334,7 +311,7 @@ public class User implements UserInterface {
     public int setPhone() {
         try {
 
-            databaseConnect();
+            connect.dbConnect();
 
             System.out.print("Enter your Phone Number: ");
             this.phoneNumber = sc.nextLine();
