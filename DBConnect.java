@@ -9,24 +9,19 @@ public class DBConnect {
     private static final String USER = "root";
     private static final String PASS = "TheHub";
 
-
     Connection conn = null;
     Statement st = null;
 
-
-
     private static DBConnect instance;
 
-    private DBConnect(){}
+    DBConnect(){}
 
-    public static synchronized DBConnect getInstance() {
+    public static synchronized void getInstance() {
         if (instance == null) {
             instance = new DBConnect();
         }
-        return instance;
 
     }
-
 
 
     public void dbConnect() {

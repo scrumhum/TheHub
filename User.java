@@ -1,4 +1,4 @@
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Scanner;
 
 public class User implements UserInterface {
@@ -10,7 +10,14 @@ public class User implements UserInterface {
     public int authorizationLevel;
     Scanner sc = new Scanner(System.in);
     DBConnect connect = new DBConnect();
+
+    public  static Connection conn = null;
     Statement st = null;
+
+    private static final String URL = "jdbc:mysql://localhost:3306/thehub";
+    private static final String USER = "root";
+    private static final String PASS = "TheHub";
+
 
     public User() {
 
@@ -65,9 +72,10 @@ public class User implements UserInterface {
 
     }
 
+
     //validates email formatting
     public boolean isValidEmail(String email) {
-        String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+        String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3})|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
         java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
         java.util.regex.Matcher m = p.matcher(email);
         return m.matches();
@@ -76,9 +84,9 @@ public class User implements UserInterface {
     public void writeProfile() {
         try {
 
-            connect.dbConnect();
-
-
+            DBConnect.getInstance();
+            conn = DriverManager.getConnection(URL, USER, PASS);
+            st = conn.createStatement();
             System.out.println("Writing profile to database...");
             String sql = "INSERT INTO profiles (firstname, lastname, username, password, gender, email, bio, location, phone_number) " +
                     "VALUES ('" + this.firstName + "', '" + this.lastName + "', '" + this.username + "', '" + this.password + "', '" + this.gender + "', '" + this.email + "', '" + this.bio + "', '" + this.location + "', '" + this.phoneNumber + "');";
@@ -86,252 +94,634 @@ public class User implements UserInterface {
             System.out.println("Record inserted successfully");
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
-
     // get username
-    public String getUserName() {
-        return this.username;
+
+    public static String getUserName(String phoneNumber) {
+        String username = null;
+        try {
+            DBConnect.getInstance();
+            conn = DriverManager.getConnection(URL, USER, PASS);
+            PreparedStatement st = conn.prepareStatement("SELECT username FROM profiles WHERE phone_number=?");
+            st.setString(1, phoneNumber);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                username = rs.getString(1);
+                System.out.println("Record retrieved successfully: " + username);
+            } else {
+                System.out.println("User not found.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return username;
+
     }
 
     // get password
-    public String getPassword() {
-        return this.password;
+
+    public static String getPassword(String username) {
+        String password = null;
+        try {
+            DBConnect.getInstance();
+            conn = DriverManager.getConnection(URL, USER, PASS);
+            PreparedStatement st = conn.prepareStatement("SELECT password FROM profiles WHERE username=?");
+            st.setString(1, username);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                password = rs.getString(1);
+                System.out.println("Record retrieved successfully: " + password);
+            } else {
+                System.out.println("User not found.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return password;
     }
 
     // get first name
-    public String getFirstName() {
-        return this.firstName;
+
+    public static String getFirstName(String username) {
+        String firstName = null;
+        try {
+            DBConnect.getInstance();
+            conn = DriverManager.getConnection(URL, USER, PASS);
+            PreparedStatement st = conn.prepareStatement("SELECT firstname FROM profiles WHERE username=?");
+            st.setString(1, username);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                firstName = rs.getString(1);
+                System.out.println("Record retrieved successfully: " + firstName);
+            } else {
+                System.out.println("User not found.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return firstName;
     }
 
     // get last name
-    public String getLastName() {
-        return this.lastName;
+
+    public static String getLastName(String username) {
+        String lastName = null;
+        try {
+            DBConnect.getInstance();
+            conn = DriverManager.getConnection(URL, USER, PASS);
+            PreparedStatement st = conn.prepareStatement("SELECT lastname FROM profiles WHERE username=?");
+            st.setString(1, username);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                lastName = rs.getString(1);
+                System.out.println("Record retrieved successfully: " + lastName);
+            } else {
+                System.out.println("User not found.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return lastName;
     }
 
     // get user id
-     /*public int getUserID() {
+
+    public static int getUserID(String username) {
+        int userID = 0;
+        try {
+            DBConnect.getInstance();
+            conn = DriverManager.getConnection(URL, USER, PASS);
+            PreparedStatement st = conn.prepareStatement("SELECT id FROM profiles WHERE username=?");
+            st.setString(1, username);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                userID = rs.getInt(1);
+                System.out.println("Record retrieved successfully: " + userID);
+            } else {
+                System.out.println("User not found.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         return userID;
-     }  //Should be changed to have it return the primary key.*/
+    }
 
     // get gender
-    public String getGender() {
-        return this.gender;
+
+    public static String getGender(String username) {
+        String gender = null;
+        try {
+            DBConnect.getInstance();
+            conn = DriverManager.getConnection(URL, USER, PASS);
+            PreparedStatement st = conn.prepareStatement("SELECT gender FROM profiles WHERE username=?");
+            st.setString(1, username);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                gender = rs.getString(1);
+                System.out.println("Record retrieved successfully: " + gender);
+            } else {
+                System.out.println("User not found.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return gender;
     }
 
     // get email
-    public String getEmail() {
-        return this.email;
+
+    public static String getEmail(String username) {
+        String email = null;
+        try {
+            DBConnect.getInstance();
+            conn = DriverManager.getConnection(URL, USER, PASS);
+            PreparedStatement st = conn.prepareStatement("SELECT email FROM profiles WHERE username=?");
+            st.setString(1, username);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                email = rs.getString(1);
+                System.out.println("Record retrieved successfully: " + email);
+            } else {
+                System.out.println("User not found.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return email;
     }
 
     // get bio
-    public String getBio() {
-        return this.bio;
+
+    public static String getBio(String username) {
+        String bio = null;
+        try {
+            DBConnect.getInstance();
+            conn = DriverManager.getConnection(URL, USER, PASS);
+            PreparedStatement st = conn.prepareStatement("SELECT bio FROM profiles WHERE username=?");
+            st.setString(1, username);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                bio = rs.getString(1);
+                System.out.println("Record retrieved successfully: " + bio);
+            } else {
+                System.out.println("User not found.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return bio;
     }
 
     // get phone number
-    public String getPhone() {
-        return this.phoneNumber;
+
+    public static String getPhone(String username) {
+        String phoneNumber = null;
+        try {
+            DBConnect.getInstance();
+            conn = DriverManager.getConnection(URL, USER, PASS);
+            PreparedStatement st = conn.prepareStatement("SELECT phone_number FROM profiles WHERE username=?");
+            st.setString(1, username);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                phoneNumber = rs.getString(1);
+                System.out.println("Record retrieved successfully: " + phoneNumber);
+            } else {
+                System.out.println("User not found.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return phoneNumber;
     }
 
-    public int getAuthorizationLevel() {
-        return this.authorizationLevel;
+    //STILL DOES NOT FUNCTION
+    public int getAuthorizationLevel(String username) {
+        int authorization = 0;
+        try {
+            DBConnect.getInstance();
+            conn = DriverManager.getConnection(URL, USER, PASS);
+            PreparedStatement st = conn.prepareStatement("SELECT authorization FROM profiles WHERE username=?");
+            st.setString(1, username);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                authorization = rs.getInt(1);
+                System.out.println("Record retrieved successfully: " + authorization);
+            } else {
+                System.out.println("User not found.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return authorization;
     }
 
     // get profile image
-    public Object getImage() {
+
+    public Object getImage(String username) {
         return this.profileImg;
     }
 
-    @Override
+
     public String setFirstName() {
         try {
 
             connect.dbConnect();
 
-            System.out.print("Enter your First Name: ");
-            this.firstName = sc.nextLine();
             System.out.print("Enter your Email: ");
             this.email = sc.nextLine();
+            System.out.print("Enter your updated First Name: ");
+            this.firstName = sc.nextLine();
+
 
             //TODO need to update clause to reflect user's current log in or something like that.
-            String sql2 = "UPDATE profiles SET firstname='" +
+            String sql = "UPDATE profiles SET firstname='" +
                     this.firstName + "' WHERE email='" + this.email + "';";
 
-            st.executeUpdate(sql2);
+            st.executeUpdate(sql);
             System.out.println("Record adjusted successfully");
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return null;
     }
 
-    @Override
+
     public String setLastName() {
         try {
 
             connect.dbConnect();
 
-            System.out.print("Enter your Last Name: ");
-            this.lastName = sc.nextLine();
             System.out.print("Enter your Email: ");
             this.email = sc.nextLine();
+            System.out.print("Enter your updated Last Name: ");
+            this.lastName = sc.nextLine();
+
 
 
             //TODO need to update clause to reflect user's current log in or something like that.
-            String sql2 = "UPDATE profiles SET lastname='" +
+            String sql = "UPDATE profiles SET lastname='" +
                     this.lastName + "' WHERE email='" + this.email + "';";
 
-            st.executeUpdate(sql2);
+            st.executeUpdate(sql);
             System.out.println("Record adjusted successfully");
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return null;
     }
 
-    @Override
+
     public String setUserName() {
         try {
 
             connect.dbConnect();
 
-            System.out.print("Enter your Username: ");
-            this.username = sc.nextLine();
             System.out.print("Enter your Email: ");
             this.email = sc.nextLine();
+            System.out.print("Enter your new Username: ");
+            this.username = sc.nextLine();
+
 
 
             //TODO need to update clause to reflect user's current log in or something like that.
-            String sql2 = "UPDATE profiles SET username='" +
+            String sql = "UPDATE profiles SET username='" +
                     this.username + "' WHERE email='" + this.email + "';";
 
-            st.executeUpdate(sql2);
+            st.executeUpdate(sql);
             System.out.println("Record adjusted successfully");
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return null;
     }
 
-    @Override
+
     public String setPassword() {
         try {
 
             connect.dbConnect();
 
-            System.out.print("Enter your Password: ");
-            this.password = sc.nextLine();
+
             System.out.print("Enter your Email: ");
             this.email = sc.nextLine();
+            System.out.print("Enter your updated Password: ");
+            this.password = sc.nextLine();
+
 
             //TODO need to update clause to reflect user's current log in or something like that.
-            String sql2 = "UPDATE profiles SET password='" +
+            String sql = "UPDATE profiles SET password='" +
                     this.password + "' WHERE email='" + this.email + "';";
 
-            st.executeUpdate(sql2);
+            st.executeUpdate(sql);
             System.out.println("Record adjusted successfully");
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return null;
     }
 
-    @Override
+
     public String setGender() {
         try {
 
             connect.dbConnect();
 
-            System.out.print("Enter your Gender: ");
-            this.gender = sc.nextLine();
             System.out.print("Enter your Email: ");
             this.email = sc.nextLine();
+            System.out.print("Enter your Gender: ");
+            this.gender = sc.nextLine();
+
 
             //TODO need to update clause to reflect user's current log in or something like that.
-            String sql2 = "UPDATE profiles SET gender='" +
+            String sql = "UPDATE profiles SET gender='" +
                     this.gender + "' WHERE email='" + this.email + "';";
 
-            st.executeUpdate(sql2);
+            st.executeUpdate(sql);
             System.out.println("Record adjusted successfully");
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return null;
     }
 
-    @Override
+
     public String setEmail() {
         try {
 
             connect.dbConnect();
 
-            System.out.print("Enter your Email: ");
-            this.email = sc.nextLine();
             System.out.print("Enter your Username: ");
             this.username = sc.nextLine();
+            System.out.print("Enter your updated Email: ");
+            this.email = sc.nextLine();
+
 
             //TODO need to update clause to reflect user's current log in or something like that.
-            String sql2 = "UPDATE profiles SET email='" +
+            String sql = "UPDATE profiles SET email='" +
                     this.email + "' WHERE username='" + this.username + "';";
 
-            st.executeUpdate(sql2);
+            st.executeUpdate(sql);
             System.out.println("Record adjusted successfully");
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return null;
     }
 
-    @Override
+
     public String setBio() {
         try {
 
             connect.dbConnect();
 
-            System.out.print("Enter your Biography: ");
-            this.bio = sc.nextLine();
             System.out.print("Enter your Email: ");
             this.email = sc.nextLine();
+            System.out.print("Enter your updated Biography: ");
+            this.bio = sc.nextLine();
+
 
             //TODO need to update clause to reflect user's current log in or something like that.
-            String sql2 = "UPDATE profiles SET bio='" +
+            String sql = "UPDATE profiles SET bio='" +
                     this.bio + "' WHERE email='" + this.email + "';";
 
-            st.executeUpdate(sql2);
+            st.executeUpdate(sql);
             System.out.println("Record adjusted successfully");
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return null;
     }
 
-    @Override
+
     public int setPhone() {
         try {
 
             connect.dbConnect();
 
-            System.out.print("Enter your Phone Number: ");
-            this.phoneNumber = sc.nextLine();
             System.out.print("Enter your Email: ");
             this.email = sc.nextLine();
+            System.out.print("Enter your updated Phone Number: ");
+            this.phoneNumber = sc.nextLine();
+
 
             //TODO need to update clause to reflect user's current log in or something like that.
-            String sql2 = "UPDATE profiles SET phone_number='" +
+            String sql = "UPDATE profiles SET phone_number='" +
                     this.phoneNumber + "' WHERE email='" + this.email + "';";
 
-            st.executeUpdate(sql2);
+            st.executeUpdate(sql);
             System.out.println("Record adjusted successfully");
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return 0;
     }
 
+
+    public String getFirstName() {
+        return null;
+    }
+
+
+    public String getLastName() {
+        return null;
+    }
+
+
+    public String getUserName() {
+        return null;
+    }
+
+
+    public String getPassword() {
+        return null;
+    }
+
+
+    public static int getUserID() {
+        return 0;
+    }
+
+
+    public String getGender() {
+        return null;
+    }
+
+
+    public String getEmail() {
+        return null;
+    }
+
+
+    public String getBio() {
+        return null;
+    }
+
+
+    public int getAuthorizationLevel() {
+        return 0;
+    }
+
+
+    public String getPhone() {
+        return null;
+    }
+
     //Images not utilized yet
-    @Override
+
     public Object setImage() {
         return null;
     }

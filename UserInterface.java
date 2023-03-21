@@ -1,7 +1,7 @@
 public interface UserInterface {
 
-    //AT THIS POINT, NONE OF MY SETTERS WORK!!!
 
+    //SETTERS!
     String setFirstName();
 
     String setLastName();
@@ -18,10 +18,7 @@ public interface UserInterface {
 
     int setPhone();
 
-    Object setImage();
-
-
-
+    //GETTERS!
     String getFirstName();
 
     String getLastName();
@@ -30,7 +27,9 @@ public interface UserInterface {
 
     String getPassword();
 
-    //int getUserID(); //Needs to be updated to get primary Key
+    static void getUserID() {
+        return;
+    }
 
     String getGender();
 
@@ -41,7 +40,5 @@ public interface UserInterface {
     int getAuthorizationLevel();
 
     String getPhone();
-
-    Object getImage();
 
 }
