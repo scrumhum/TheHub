@@ -2,8 +2,10 @@ public class Main {
 
     public static void main(String[] args) {
 
+        //UserLogin login = new UserLogin();
+        //login.login();
 
-        UserInterface userProfile = new User();
-
+        //UserInterface user = new User();
+        User.getPhone("knifey");
     }
 }
