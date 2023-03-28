@@ -1,0 +1,90 @@
+.logoText_T{
+	transform: translate(18px,18px);
+	animation: a_T 7s linear 0s infinite;
+}
+.logoText_H{
+	transform: translate(0px,36px);
+	animation: a_H 7s linear 0s infinite;
+}
+.logoText_E{
+	transform: translate(0px,18px);
+	animation: a_E 7s linear 0s infinite;
+}
+.logoText_U{
+	transform: translate(0px,0px);
+	animation: a_U 7s linear 0s infinite;
+}
+.logoText_B{
+	transform: translate(36px,18px);
+	animation: a_B 7s linear 0s infinite;
+}
+.logoText_Inner1{
+	transform: translate(18px,0px);
+	animation: a_Inner1 7s linear 0s infinite;
+}
+.logoText_Outer1{
+	transform: translate(36px,0px);
+	animation: a_Outer1 7s linear 0s infinite;
+}
+.logoText_Inner2{
+	transform: translate(36px,36px);
+	animation: a_Inner2 7s linear 0s infinite;
+}
+.logoText_Outer2{
+	transform: translate(18px,36px);
+	animation: a_Outer2 7s linear 0s infinite;
+}
+@keyframes a_T {
+	0% {transform: translate(18px,18px);}
+	5% {transform: translate(0px,0px);}
+	80% {transform: translate(0px,0px);}
+	85% {transform: translate(18px,18px);}
+}
+@keyframes a_H {
+	0% {transform: translate(0px,36px);}
+	5% {transform: translate(18px,0px);}
+	80% {transform: translate(18px,0px);}
+	85% {transform: translate(0px,36px);}
+}
+@keyframes a_E {
+	0% {transform: translate(0px,18px);}
+	5% {transform: translate(36px,0px);}
+	80% {transform: translate(36px,0px);}
+	85% {transform: translate(0px,18px);}
+}
+@keyframes a_U {
+	0% {transform: translate(0px,0px);}
+	5% {transform: translate(18px,18px);}
+	80% {transform: translate(18px,18px);}
+	85% {transform: translate(0px,0px);}
+}
+@keyframes a_B {
+	0% {transform: translate(36px,18px);}
+	5% {transform: translate(18px,36px);}
+	80% {transform: translate(18px,36px);}
+	85% {transform: translate(36px,18px);}
+}
+@keyframes a_Inner1 {
+	0% {transform: translate(18px,0px);}
+	5% {transform: translate(36px,36px);}
+	80% {transform: translate(36px,36px);}
+	85% {transform: translate(18px,0px);}
+}
+@keyframes a_Outer1 {
+	0% {transform: translate(36px,0px);}
+	5% {transform: translate(0px,36px);}
+	80% {transform: translate(0px,36px);}
+	85% {transform: translate(36px,0px);}
+}
+@keyframes a_Inner2 {
+	0% {transform: translate(36px,36px);}
+	5% {transform: translate(0px,18px);}
+	80% {transform: translate(0px,18px);}
+	85% {transform: translate(36px,36px);}
+}
+@keyframes a_Outer2 {
+	0% {transform: translate(18px,36px);}
+	5% {transform: translate(36px,18px);}
+	80% {transform: translate(36px,18px);}
+	85% {transform: translate(18px,36px);}
+}
