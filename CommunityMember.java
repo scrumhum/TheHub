@@ -1,23 +1,23 @@
+import java.sql.*;
+import java.util.Scanner;
+
 public class CommunityMember extends User {
-    private boolean volunteerStatus;
-    
+ private String volunteerStatus;
 
-    //private static int comMemberCount = 0; // number of objects in memory, keeps track of all users (Maybe also include this in the main User class)
+ //constructor
+ public CommunityMember() {
+  System.out.print("Are you SURE you want to volunteer?");
+  this.volunteerStatus = sc.nextLine().trim().toLowerCase();
+ }
 
+ // Used to create private events
+ public void createPrivateEvent(String EventName){
+  //possibly importing some functionality from the Event Class
+ }
 
-     //constructor
-     public CommunityMember() {
-
-     }
-
-     // Used to create private events
-     public void createPrivateEvent(String EventName){
-        //possibly importing some functionality from the Event Class
-     }
-
-     public void checkCalendar() {
-       //this will be code to see the calendar, unsure of how to implement this. Waiting to see how events class is put together.
-     }
+ public void checkCalendar() {
+  //this will be code to see the calendar, unsure of how to implement this. Waiting to see how events class is put together.
+ }
 
 /*
      //set volunteer status

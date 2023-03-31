@@ -19,19 +19,20 @@ public class User implements UserInterface {
     private static final String PASS = "TheHub";
 
 
+    //TODO update this class to correctly obtain auth level from user and see if I need to add new code for adding volunteer status to DB.
     public User() {
 
         //This is only a placeholder, as I think that it might be better to create an enum that handles role assignment.
         //Also, it glitches out if you select 2 for Gathering Manager. :(
-        /*System.out.print("Joining as Community Member? Press 1.\nJoining as a Gathering Manager? Press 2.");
-        if (sc.nextInt() == 1) {
-            this.authorizationLevel = 0;
-        } else if (sc.nextInt() == 2) {
+        System.out.print("Joining as Community Member? Press 1.\nJoining as a Gathering Manager? Press 2.");
+        if (sc.nextInt() == 2) {
             this.authorizationLevel = 1;
+        } else if (sc.nextInt() == 1) {
+            this.authorizationLevel = 0;
         } else {
             System.out.println("LIKE I SAID, enter either a 1 or a 2. NO FUNNY STUFF");
         }
-        sc.nextLine();*/
+        sc.nextLine();
 
         System.out.print("Enter your First Name: ");
         this.firstName = sc.nextLine().trim().toLowerCase();
