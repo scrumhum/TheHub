@@ -4,8 +4,7 @@ import java.util.Scanner;
 public class User implements UserInterface {
     public String firstName, lastName, username, password, gender, email, bio, location;
 
-    //DON'T CHANGE THIS TO AN INT, IT WILL CAUSE A BUG IN THE SCANNER
-    public String phoneNumber;
+    public int phoneNumber;
     public Object profileImg;
     public int authorizationLevel;
     Scanner sc = new Scanner(System.in);
@@ -22,17 +21,19 @@ public class User implements UserInterface {
     //TODO update this class to correctly obtain auth level from user and see if I need to add new code for adding volunteer status to DB.
     public User() {
 
-        //This is only a placeholder, as I think that it might be better to create an enum that handles role assignment.
-        //Also, it glitches out if you select 2 for Gathering Manager. :(
-        System.out.print("Joining as Community Member? Press 1.\nJoining as a Gathering Manager? Press 2.");
+        //Auth level
+        System.out.print("Joining as Gathering Manager? Press 1.\nJoining as a Community Member? Press 2.");
         if (sc.nextInt() == 2) {
             this.authorizationLevel = 1;
+            System.out.println("Welcome Community Member!");
         } else if (sc.nextInt() == 1) {
             this.authorizationLevel = 0;
+            System.out.println("Welcome Gathering Manager!");
         } else {
             System.out.println("LIKE I SAID, enter either a 1 or a 2. NO FUNNY STUFF");
         }
-        sc.nextLine();
+        sc.nextLine(); //Don't delete this.
+
 
         System.out.print("Enter your First Name: ");
         this.firstName = sc.nextLine().trim().toLowerCase();
@@ -47,7 +48,6 @@ public class User implements UserInterface {
         System.out.print("Enter your Gender: ");
         this.gender = sc.nextLine().trim().toLowerCase();
         System.out.print("Enter your Email: ");
-        // TODO Need to check for duplicates in the DB
         this.email = sc.nextLine().trim().toLowerCase();
 
         //validates email formatting
@@ -65,8 +65,12 @@ public class User implements UserInterface {
         this.bio = sc.nextLine().trim().toLowerCase();
         System.out.print("Enter your location: ");
         this.location = sc.nextLine().trim().toLowerCase();
-        System.out.print("Enter your Phone Number: ");
-        this.phoneNumber = sc.nextLine().trim().toLowerCase();
+        System.out.print("Enter your Phone Number(only digits): ");
+        try {
+            this.phoneNumber = Integer.parseInt(sc.nextLine());
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
 
         writeProfile();
 
@@ -89,8 +93,8 @@ public class User implements UserInterface {
             conn = DriverManager.getConnection(URL, USER, PASS);
             st = conn.createStatement();
             System.out.println("Writing profile to database...");
-            String sql = "INSERT INTO profiles (firstname, lastname, username, password, gender, email, bio, location, phone_number) " +
-                    "VALUES ('" + this.firstName + "', '" + this.lastName + "', '" + this.username + "', '" + this.password + "', '" + this.gender + "', '" + this.email + "', '" + this.bio + "', '" + this.location + "', '" + this.phoneNumber + "');";
+            String sql = "INSERT INTO profiles (firstname, lastname, username, password, gender, email, bio, location, phone_number, auth_level) " +
+                    "VALUES ('" + this.firstName + "', '" + this.lastName + "', '" + this.username + "', '" + this.password + "', '" + this.gender + "', '" + this.email + "', '" + this.bio + "', '" + this.location + "', '" + this.phoneNumber + "', '" + this.authorizationLevel + "');";
             st.executeUpdate(sql);
             System.out.println("Record inserted successfully");
         } catch (Exception e) {
@@ -648,8 +652,11 @@ public class User implements UserInterface {
             System.out.print("Enter your Email: ");
             this.email = sc.nextLine();
             System.out.print("Enter your updated Phone Number: ");
-            this.phoneNumber = sc.nextLine();
-
+            try {
+                this.phoneNumber = Integer.parseInt(sc.nextLine());
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
 
             //TODO need to update clause to reflect user's current log in or something like that.
             String sql = "UPDATE profiles SET phone_number='" +
