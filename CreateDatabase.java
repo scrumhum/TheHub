@@ -49,7 +49,9 @@ public class CreateDatabase {
                     " email VARCHAR(255), " +
                     " bio VARCHAR(255), " +
                     " location VARCHAR(255), " +
-                    " phone_number VARCHAR(50)) ;";
+                    " phone_number VARCHAR(50), " +
+                    " auth_level VARCHAR(50), " +
+                    " volunteer_status VARCHAR(50)) ;"; //TODO add this into the User DB input command (might need to make an @override method for the community member class, so that the writeProfile method doesnt get all dicey..
             st.executeUpdate(sql3);
             System.out.println("Table created successfully...");
 
@@ -60,10 +62,12 @@ public class CreateDatabase {
                     " date INT(255), " +
                     " host VARCHAR(255), " +
                     " event_name VARCHAR(255), " +
+                    " location VARCHAR(255), " +
                     " event_type VARCHAR(255), " +
                     " description VARCHAR(255), " +
                     " all_ages VARCHAR(255), " +
-                    " entry_fee INT(255));";
+                    " entry_fee INT(255), " +
+                    " volunteers VARCHAR(255));";
             st.executeUpdate(sql4);
             System.out.println("Table created successfully...");
             conn.close();
