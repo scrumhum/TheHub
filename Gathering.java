@@ -1,77 +1,123 @@
+import javax.xml.stream.Location;
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Scanner;
 
-public class GatheringManager extends User {
-    private User currentUser;
-    private List<Gathering> gatherings;
+public class Gathering {
 
-    public GatheringManager(String username, String password, String name, String email) {
-        super(username, password, name, email);
-        gatherings = new ArrayList<>();
+    public String hostName, eventName, eventType, description, allAges, volunteersWanted, location;
+
+    public int date;
+    public int entryFee;
+
+    Scanner sc = new Scanner(System.in);
+    DBConnect connect = new DBConnect();
+
+    public  static Connection conn = null;
+    Statement st = null;
+
+    private static final String URL = "jdbc:mysql://localhost:3306/thehub";
+    private static final String USER = "root";
+    private static final String PASS = "TheHub";
+
+    public Gathering() {
+        System.out.print("When is the event?");
+        try {
+            this.date = Integer.parseInt(sc.nextLine());
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        System.out.print("Enter your Name: ");
+        this.hostName = sc.nextLine().trim().toLowerCase();
+        System.out.print("What do you want to call this event?");
+        this.eventName = sc.nextLine().trim().toLowerCase();
+        System.out.print("What type of event is this?");
+        this.eventType = sc.nextLine().trim().toLowerCase();
+        System.out.print("Where is the event?");
+        this.location = sc.nextLine().trim().toLowerCase();
+        System.out.print("Enter a brief description of your event:");
+        this.description = sc.nextLine().trim().toLowerCase();
+        System.out.print("What is the entry fee? (Enter dollar amount only)");
+        try {
+            this.entryFee = Integer.parseInt(sc.nextLine());
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        System.out.print("Is this event all ages?");
+        this.allAges = sc.nextLine().trim().toLowerCase();
+        System.out.print("Do you want volunteers?");
+        this.volunteersWanted = sc.nextLine().trim().toLowerCase();
+
+        writeEvent();
     }
 
-    public void login(String username, String password) {
-        if (this.getUsername().equals(username) && this.getPassword().equals(password)) {
-            currentUser = this;
+    //TODO figure out how to get these to work or just remove them.
+    public void readDate() throws Exception{
+        String dateFormat = "MM/DD/YYYY";
+        Scanner scanner = new Scanner(System.in);
+        //setDate((Date) new SimpleDateFormat(dateFormat).parse(scanner.nextLine()));
+    }
+
+    public void setDate(int date){
+        System.out.print("When is the event?");
+        try {
+            this.date = Integer.parseInt(sc.nextLine());
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
         }
     }
 
-    public void editProfile(String name, String email, String password) {
-        currentUser.setName(name);
-        currentUser.setEmail(email);
-        currentUser.setPassword(password);
-    }
+    public void writeEvent() {
+        try {
 
-    public void addEventFromLink(String link) {
-        Event event = EventParser.parseFromLink(link);
-        if (event != null) {
-            currentUser.addEvent(event);
-        }
-    }
-
-    public void createEvent(String name, String photo, String description, String location, String time) {
-        Event event = new Event(name, photo, description, location, time);
-        currentUser.addEvent(event);
-    }
-
-    public void addGathering(Gathering gathering) {
-        gatherings.add(gathering);
-    }
-
-    public void removeGathering(Gathering gathering) {
-        gatherings.remove(gathering);
-    }
-
-    public List<Gathering> getGatherings() {
-        return gatherings;
-    }
-
-    public void setGatherings(List<Gathering> gatherings) {
-        this.gatherings = gatherings;
-    }
-
-    public void loadEventsFromDatabase(String url, String user, String password) {
-        try (Connection conn = DriverManager.getConnection(url, user, password);
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT name, photo, description, location, time FROM events")) {
-            while (rs.next()) {
-                String name = rs.getString("name");
-                String photo = rs.getString("photo");
-                String description = rs.getString("description");
-                String location = rs.getString("location");
-                String time = rs.getString("time");
-                Event event = new Event(name, photo, description, location, time);
-                currentUser.addEvent(event);
+            DBConnect.getInstance();
+            conn = DriverManager.getConnection(URL, USER, PASS);
+            st = conn.createStatement();
+            System.out.println("Writing event to database...");
+            String sql = "INSERT INTO events (date, host, event_name, event_type, description, all_ages, entry_fee, volunteers) " +
+                    "VALUES ('" + this.date + "', '" + this.hostName + "', '" + this.eventName + "', '" + this.eventType + "', '" + this.description + "', '" + this.allAges + "', '" + this.entryFee + "', '" + this.volunteersWanted + "');";
+            st.executeUpdate(sql);
+            System.out.println("Record inserted successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
-        } catch (SQLException e) {
-            System.out.println("Error loading events from database: " + e.getMessage());
         }
     }
 
-    public void pushEventsToCalendar(Calendar calendar) {
-        for (Event event : currentUser.getEvents()) {
-            calendar.addEvent(event);
+
+    Location gatheringLocation = new Location() {
+        @Override
+        public int getLineNumber() {
+            return 0;
         }
-    }
+
+        @Override
+        public int getColumnNumber() {
+            return 0;
+        }
+
+        @Override
+        public int getCharacterOffset() {
+            return 0;
+        }
+
+        @Override
+        public String getPublicId() {
+            return null;
+        }
+
+        @Override
+        public String getSystemId() {
+            return null;
+        }
+    };
 }

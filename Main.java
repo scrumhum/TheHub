@@ -5,7 +5,9 @@ public class Main {
         //UserLogin login = new UserLogin();
         //login.login();
 
-        //UserInterface user = new User();
-        User.getPhone("knifey");
+        //Gathering event = new Gathering();
+
+        UserInterface user = new CommunityMember();
+        //User.getPhone("knifey");
     }
 }

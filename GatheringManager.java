@@ -1,21 +1,11 @@
-import java.util.ArrayList;
-import java.util.List;
-
-    public class GatheringManager extends User {
+public class GatheringManager extends User {
         private User currentUser;
-        private List<Gathering> gatherings;
 
-        public GatheringManager(String username, String password, String name, String email) {
-            super(username, password, name, email);
-            gatherings = new ArrayList<>();
+        public GatheringManager() {
+
         }
 
-        public void login(String username, String password) {
-            if (this.getUserName().equals(username) && this.getPassword().equals(password)) {
-                currentUser = this;
-            }
-        }
-
+        /*
         public void editProfile(String name, String email, String password) {
             currentUser.setFirstName(name);
             currentUser.setEmail(email);
@@ -48,6 +38,5 @@ import java.util.List;
 
         public void setGatherings(List<Gathering> gatherings) {
             this.gatherings = gatherings;
-        }
-    }
-//
+        }*/
+}
