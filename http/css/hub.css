@@ -59,6 +59,9 @@ footer{
 	padding:5px;
 	text-align:center;
 }
+button:hover{
+	cursor:pointer;
+}
 .logo{
 	height:120px;
 	width:120px;
@@ -214,8 +217,11 @@ a:hover{
 	justify-content:space-around;
 }
 .input.login{
-	font-size:0.8rem;
+	border:3px solid black;
+	font-size:0.6rem;
 	border-radius:8px;
+	width:100%;
+	height:20%;
 }
 .profile.page{
 	padding-left:50px;
@@ -255,5 +261,98 @@ a:hover{
 	display:flex;
 	flex-direction:column;
 	width:70%;
-	justify-content:space-between;
+}
+.search.page{
+	display:flex;
+	flex-direction:column;
+	justify-content:center;
+}
+.search.box{
+	background-color:white;
+	border-radius:16px;
+	width:50%;
+	font-size:0.8rem;
+	display:flex;
+	flex-direction:row;
+	justify-content:center;
+}
+.search.input{
+	font-size:0.8rem;
+}
+#_login_{
+	display:none;
+	visibility:hidden;
+}
+#_profile_{
+	display:none;
+	visibility:hidden;
+	flex-direction:column;
+}
+#_search_{
+	display:none;
+	visibility:hidden;
+}
+#_signin_{
+	display:none;
+	visibility:hidden;
+}
+.search.enter{
+	width:70px;
+	height:70px;
+	overflow:visible;
+}
+.search.enter:hover{
+	width:70px;
+	height:70px;
+	overflow:visible;
+	cursor:pointer;
+}
+.search.align{
+	display:flex;
+	flex-direction:row;
+	width:100%;
+	border:1px solid blue;
+	justify-content:center;
+}
+.events.page{
+	visibility:hidden;
+	display:none;
+	justify-content:center;
+	flex-direction:column;
+	align-content:center;
+}
+.calendar.page{
+	display:flex;
+	flex-direction:row;
+}
+.timeline{
+	width:20%;
+	display:flex;
+	flex-direction:column;
+}
+.calendar{
+	width:100%;
+	display:flex;
+}
+.make.events{
+	display:flex;
+	flex-direction:row;
+	width:100%;
+	height:100%;
+	justify-content:center;
+	align-content:center;
+}
+.create.events{
+	display:flex;
+	height:100%;
+	width:40%;
+	font-size:0.8rem;
+	justify-content:center;
+}
+.events.format{
+	display:flex;
+	flex-direction:column;
+	width:100%;
+	justify-content:center;
+	align-content:center;
 }
