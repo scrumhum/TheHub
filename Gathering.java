@@ -2,6 +2,7 @@ import javax.xml.stream.Location;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -120,4 +121,21 @@ public class Gathering {
             return null;
         }
     };
+}
+public class mockevent {
+    private Event event;
+
+    public mockevent() {
+        LocalDateTime dateTime = LocalDateTime.of(2023, 4, 22, 21, 0);
+        this.event = new Event("KikiPlanet.Productions", "POP SICK DANCE PARTY", "Party", "Louies Sports Bar, Blue Lake CA",
+                "POP SICK DANCE PARTY by KikiPlanet.Productions", 25.0, false, false, dateTime);
+
+        writeEvent();
+    }
+
+    public void writeEvent() {
+        String eventInfo = this.event.generateEventInfo();
+        System.out.println("Creating event: " + eventInfo);
+        // code to add event to calendar and store in database
+    }
 }
