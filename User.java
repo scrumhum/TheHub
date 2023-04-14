@@ -13,9 +13,11 @@ public class User implements UserInterface {
     public  static Connection conn = null;
     Statement st = null;
 
-    private static final String URL = "jdbc:mysql://localhost:3306/thehub";
-    private static final String USER = "root";
-    private static final String PASS = "TheHub";
+    static final String URL = "jdbc:mysql://192.168.72.21:3306/";
+
+    //User log in for DB
+    static final String USER = "TheHub";
+    static final String PASS = "$TheHub2023$";
 
 
     //TODO update this class to correctly obtain auth level from user and see if I need to add new code for adding volunteer status to DB.
