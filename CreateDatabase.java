@@ -4,27 +4,30 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-//TODO get Smart Tomcat working
 public class CreateDatabase {
     static final String driver = "com.mysql.cj.jdbc.Driver";
-    static final String url = "jdbc:mysql://localhost/";
+    static final String url = "jdbc:mysql://192.168.72.21:3306/";
 
     //User log in for DB
-    static final String user = "root";
-    static final String pass = "TheHub";
+    static final String user = "TheHub";
+    static final String pass = "$TheHub2023$";
 
 
-    public static void main(String[] args) {
+    public static void main() throws SQLException {
+        main(null);
+    }
+
+    public static void main(String[] args) throws SQLException {
         Connection conn = null;
         Statement st = null;
         try {
 
             //Sending connection request to the server
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName(driver);
             System.out.println("Connecting to Database...");
 
             //logging in to the server
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/", "root", "TheHub");
+            conn = DriverManager.getConnection(url, user, pass);
             System.out.println("Creating Database..");
             st = conn.createStatement();
 
@@ -75,18 +78,15 @@ public class CreateDatabase {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            if ( st!= null)
+                st.close();
             try {
-                if ( st!= null)
-                    st.close();
-            } catch (SQLException e1) {
-
-            } try {
                 if (conn != null)
                     conn.close();
             } catch (SQLException e2) {
                 e2.printStackTrace();
             }
-        };
+        }
         System.out.println("Goodbye..");
     }
 

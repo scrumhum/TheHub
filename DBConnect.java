@@ -5,9 +5,11 @@ import java.sql.Statement;
 public class DBConnect {
 
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static final String URL = "jdbc:mysql://localhost:3306/thehub";
-    private static final String USER = "root";
-    private static final String PASS = "TheHub";
+    static final String URL = "jdbc:mysql://192.168.72.21:3306/thehub";
+
+    //User log in for DB
+    static final String USER = "TheHub";
+    static final String PASS = "$TheHub2023$";
 
     Connection conn = null;
     Statement st = null;
