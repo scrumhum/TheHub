@@ -18,11 +18,11 @@ public class DBConnect {
 
     DBConnect(){}
 
-    public static synchronized void getInstance() {
+    public static synchronized DBConnect getInstance() {
         if (instance == null) {
             instance = new DBConnect();
         }
-
+        return instance;
     }
 
 
@@ -32,8 +32,6 @@ public class DBConnect {
             st = conn.createStatement();
             Class.forName(DRIVER);
             System.out.println("Connecting to database...");
-            String sql = "USE thehub;";
-            st.executeUpdate(sql);
         } catch (Exception e) {
             e.printStackTrace();
         }

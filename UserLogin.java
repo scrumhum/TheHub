@@ -4,14 +4,14 @@ import java.util.Scanner;
 
 
 public class UserLogin {
-
-    Connection conn = null;
-
     static final String URL = "jdbc:mysql://192.168.72.21:3306/";
 
     //User log in for DB
     static final String USER = "TheHub";
     static final String PASS = "$TheHub2023$";
+
+    Connection conn = null;
+    Statement st = null;
 
     public void login() throws RuntimeException {
 
@@ -22,8 +22,12 @@ public class UserLogin {
         String password = sc.nextLine();
         try {
 
-            DBConnect.getInstance();
+            DBConnect db = DBConnect.getInstance();
+            db.dbConnect();
             conn = DriverManager.getConnection(URL, USER, PASS);
+            st = conn.createStatement();
+            String sql = "USE thehub;";
+            st.executeUpdate(sql);
 
             // Query the database for the user's credentials
             String query = "SELECT username, password FROM profiles WHERE username=? AND password=?";

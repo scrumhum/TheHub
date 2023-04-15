@@ -5,8 +5,8 @@ public class GatheringManager extends User {
 
         }
 
-        /*
-        public void editProfile(String name, String email, String password) {
+
+        /*public void editProfile(String name, String email, String password) {
             currentUser.setFirstName(name);
             currentUser.setEmail(email);
             currentUser.setPassword(password);

@@ -4,9 +4,10 @@ import java.util.Scanner;
 public class User implements UserInterface {
     public String firstName, lastName, username, password, gender, email, bio, location;
 
-    public int phoneNumber;
+    public long phoneNumber;
     public Object profileImg;
     public int authorizationLevel;
+    public String volunteerStatus;
     Scanner sc = new Scanner(System.in);
     DBConnect connect = new DBConnect();
 
@@ -23,60 +24,130 @@ public class User implements UserInterface {
     //TODO update this class to correctly obtain auth level from user and see if I need to add new code for adding volunteer status to DB.
     public User() {
 
-        //Auth level
         System.out.print("Joining as Gathering Manager? Press 1.\nJoining as a Community Member? Press 2.");
-        if (sc.nextInt() == 2) {
-            this.authorizationLevel = 1;
+        int authInput = 0;
+        while (true) {
+            String input = sc.nextLine().trim();
+            try {
+                authInput = Integer.parseInt(input);
+                if (authInput == 1 || authInput == 2) {
+                    break;
+                } else {
+                    System.out.println("Please enter either 1 or 2.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a valid integer.");
+            }
+        }
+        if (authInput == 2) {
+            this.authorizationLevel = 2;
             System.out.println("Welcome Community Member!");
-        } else if (sc.nextInt() == 1) {
-            this.authorizationLevel = 0;
-            System.out.println("Welcome Gathering Manager!");
-        } else {
-            System.out.println("LIKE I SAID, enter either a 1 or a 2. NO FUNNY STUFF");
-        }
-        sc.nextLine(); //Don't delete this.
 
-
-        System.out.print("Enter your First Name: ");
-        this.firstName = sc.nextLine().trim().toLowerCase();
-        System.out.print("Enter your Last Name: ");
-        this.lastName = sc.nextLine().trim().toLowerCase();
-        System.out.print("Enter your Username: ");
-        // TODO need to check for duplicate names in DB before entering.
-        this.username = sc.nextLine().trim().toLowerCase();
-        System.out.print("Enter your Password: ");
-        // TODO need to hash passwords before storing
-        this.password = sc.nextLine().trim().toLowerCase();
-        System.out.print("Enter your Gender: ");
-        this.gender = sc.nextLine().trim().toLowerCase();
-        System.out.print("Enter your Email: ");
-        this.email = sc.nextLine().trim().toLowerCase();
-
-        //validates email formatting
-        if (isValidEmail(email)) {
-            System.out.println("Valid email");
-        }
-
-        //validates email formatting
-        if (!isValidEmail(email)) {
-            System.out.println("Invalid email. Please enter a valid email:");
+            System.out.print("Enter your First Name: ");
+            this.firstName = sc.nextLine().trim().toLowerCase();
+            System.out.print("Enter your Last Name: ");
+            this.lastName = sc.nextLine().trim().toLowerCase();
+            System.out.print("Enter your Username: ");
+            // TODO need to check for duplicate names in DB before entering.
+            this.username = sc.nextLine().trim().toLowerCase();
+            System.out.print("Enter your Password: ");
+            // TODO need to hash passwords before storing
+            this.password = sc.nextLine().trim().toLowerCase();
+            System.out.print("Enter your Gender: ");
+            this.gender = sc.nextLine().trim().toLowerCase();
+            System.out.print("Enter your Email: ");
             this.email = sc.nextLine().trim().toLowerCase();
+
+            //validates email formatting
+            if (isValidEmail(email)) {
+                System.out.println("Valid email");
+            }
+
+            //validates email formatting
+            if (!isValidEmail(email)) {
+                System.out.println("Invalid email. Please enter a valid email:");
+                this.email = sc.nextLine().trim().toLowerCase();
+            }
+
+            System.out.print("Enter a short Biography: ");
+            this.bio = sc.nextLine().trim().toLowerCase();
+            System.out.print("Enter your location: ");
+            this.location = sc.nextLine().trim().toLowerCase();
+
+
+            System.out.print("Enter your Phone Number(only digits): ");
+            while (true) {
+                long input;
+                try {
+                    input = sc.nextLong();
+                    this.phoneNumber = input;
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println("Please enter a valid integer.");
+                }
+            }
+            sc.nextLine();
+
+            System.out.print("Do you want to volunteer? Yes or No?");
+            this.volunteerStatus = sc.nextLine().trim().toLowerCase();
+
+            //Write to DB
+            writeProfile();
+
+
+
+        } else if (authInput == 1) {
+            this.authorizationLevel = 1;
+            System.out.println("Welcome Gathering Manager!");
+
+            System.out.print("Enter your First Name: ");
+            this.firstName = sc.nextLine().trim().toLowerCase();
+            System.out.print("Enter your Last Name: ");
+            this.lastName = sc.nextLine().trim().toLowerCase();
+            System.out.print("Enter your Username: ");
+            // TODO need to check for duplicate names in DB before entering.
+            this.username = sc.nextLine().trim().toLowerCase();
+            System.out.print("Enter your Password: ");
+            // TODO need to hash passwords before storing
+            this.password = sc.nextLine().trim().toLowerCase();
+            System.out.print("Enter your Gender: ");
+            this.gender = sc.nextLine().trim().toLowerCase();
+            System.out.print("Enter your Email: ");
+            this.email = sc.nextLine().trim().toLowerCase();
+
+            //validates email formatting
+            if (isValidEmail(email)) {
+                System.out.println("Valid email");
+            }
+
+            //validates email formatting
+            if (!isValidEmail(email)) {
+                System.out.println("Invalid email. Please enter a valid email:");
+                this.email = sc.nextLine().trim().toLowerCase();
+            }
+
+            System.out.print("Enter a short Biography: ");
+            this.bio = sc.nextLine().trim().toLowerCase();
+            System.out.print("Enter your location: ");
+            this.location = sc.nextLine().trim().toLowerCase();
+
+
+            System.out.print("Enter your Phone Number(only digits): ");
+            while (true) {
+                long input;
+                try {
+                    input = sc.nextLong();
+                    this.phoneNumber = input;
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println("Please enter a valid integer.");
+                }
+            }
+
+            //Write to DB
+            writeProfile();
+
         }
-
-        System.out.print("Enter a short Biography: ");
-        this.bio = sc.nextLine().trim().toLowerCase();
-        System.out.print("Enter your location: ");
-        this.location = sc.nextLine().trim().toLowerCase();
-        System.out.print("Enter your Phone Number(only digits): ");
-        try {
-            this.phoneNumber = Integer.parseInt(sc.nextLine());
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
-
-        writeProfile();
-
-
     }
 
 
@@ -90,14 +161,18 @@ public class User implements UserInterface {
 
     public void writeProfile() {
         try {
-
-            DBConnect.getInstance();
+            System.out.println("Trying to connect");
+            DBConnect connect = DBConnect.getInstance();
+            connect.dbConnect();
             conn = DriverManager.getConnection(URL, USER, PASS);
             st = conn.createStatement();
-            System.out.println("Writing profile to database...");
-            String sql = "INSERT INTO profiles (firstname, lastname, username, password, gender, email, bio, location, phone_number, auth_level) " +
-                    "VALUES ('" + this.firstName + "', '" + this.lastName + "', '" + this.username + "', '" + this.password + "', '" + this.gender + "', '" + this.email + "', '" + this.bio + "', '" + this.location + "', '" + this.phoneNumber + "', '" + this.authorizationLevel + "');";
+            String sql = "USE thehub;";
             st.executeUpdate(sql);
+            System.out.println("Connection Successful!");
+            System.out.println("Writing profile to database...");
+            String sql2 = "INSERT INTO profiles (firstname, lastname, username, password, gender, email, bio, location, phone_number, auth_level, volunteer_status) " +
+                    "VALUES ('" + this.firstName + "', '" + this.lastName + "', '" + this.username + "', '" + this.password + "', '" + this.gender + "', '" + this.email + "', '" + this.bio + "', '" + this.location + "', '" + this.phoneNumber + "', '" + this.authorizationLevel + "', '" + this.volunteerStatus + "');";
+            st.executeUpdate(sql2);
             System.out.println("Record inserted successfully");
         } catch (Exception e) {
             e.printStackTrace();
@@ -113,7 +188,6 @@ public class User implements UserInterface {
     }
 
     // get username
-
     public static String getUserName(String phoneNumber) {
         String username = null;
         try {
@@ -653,13 +727,17 @@ public class User implements UserInterface {
 
             System.out.print("Enter your Email: ");
             this.email = sc.nextLine();
-            System.out.print("Enter your updated Phone Number: ");
-            try {
-                this.phoneNumber = Integer.parseInt(sc.nextLine());
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
+            System.out.print("Enter your Phone Number(only digits): ");
+            while (true) {
+                long input;
+                try {
+                    input = sc.nextLong();
+                    this.phoneNumber = input;
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println("Please enter a valid integer.");
+                }
             }
-
             //TODO need to update clause to reflect user's current log in or something like that.
             String sql = "UPDATE profiles SET phone_number='" +
                     this.phoneNumber + "' WHERE email='" + this.email + "';";
