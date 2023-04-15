@@ -54,7 +54,7 @@ public class CreateDatabase {
                     " location VARCHAR(255), " +
                     " phone_number VARCHAR(50), " +
                     " auth_level VARCHAR(50), " +
-                    " volunteer_status VARCHAR(50)) ;"; //TODO add this into the User DB input command (might need to make an @override method for the community member class, so that the writeProfile method doesnt get all dicey..
+                    " volunteer_status VARCHAR(50)) ;";
             st.executeUpdate(sql3);
             System.out.println("Table created successfully...");
 
