@@ -107,14 +107,7 @@ public class Admin {
         return m.matches();
     }
 
-        public boolean login(String username, String password) {
-            if (this.username.equals(username) && this.password.equals(password)) {
-                return true;
-            }
-            return false;
-        }
-
-        public void approveUser(User user) {
+    public void approveUser(User user) {
             //user.setApproved(true);
             System.out.println("User " + user.getUserName() + " has been approved.");
         }
@@ -135,10 +128,37 @@ public class Admin {
             System.out.println("Post " + post.getTitle() + " has been approved.");
         }*/
 
-        /*
+
         //TODO Plug in DB Connection
-        public void deleteUser(User user) {
-            users.remove(user);
-            System.out.println("User " + user.getUserName() + " has been deleted.");
-        }*/
+        public String deleteUser() {
+            String loserUser = username;
+                try {
+                    connect.dbConnect();
+                    System.out.print("Enter your Username");
+                    this.username = sc.nextLine();
+                    System.out.print("Enter your password");
+                    this.password = sc.nextLine();
+
+
+                    //TODO need to update clause to reflect user's current log in or something like that.
+                    String sql = "SELECT * FROM profiles WHERE username = '" +
+                            this.firstName + "' WHERE password ='" + this.password + "';";
+
+
+                    st.executeUpdate(sql);
+                    System.out.println("Record adjusted successfully");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    if (conn != null) {
+                        try {
+                            conn.close();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                return null;
+                System.out.println("User " + user.getUserName() + " has been deleted.");
+        }
     }

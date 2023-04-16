@@ -1,6 +1,6 @@
-public interface UserInterface {
-
-
+ public interface UserInterface {
+ }
+/*
     //SETTERS!
     String setFirstName();
 
@@ -41,4 +41,5 @@ public interface UserInterface {
 
     String getPhone();
 
-}
+    void getUserName(String number);
+}*/
