@@ -2,6 +2,7 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class CommunityMember extends User {
+
  private String volunteerStatus;
 
  Scanner sc = new Scanner(System.in);
@@ -10,44 +11,16 @@ public class CommunityMember extends User {
  public  static Connection conn = null;
  Statement st = null;
 
- private static final String URL = "jdbc:mysql://localhost:3306/thehub";
- private static final String USER = "root";
- private static final String PASS = "TheHub";
+ static final String URL = "jdbc:mysql://192.168.72.21:3306/";
+
+ //User log in for DB
+ static final String USER = "TheHub";
+ static final String PASS = "$TheHub2023$";
 
  //constructor
  public CommunityMember() {
-  System.out.print("Do you want to volunteer? Yes or No?");
-  this.volunteerStatus = sc.nextLine().trim().toLowerCase();
 
-  writeComProfile(); //TODO Fix this. I need to figure out how to get this to write to the same entry that was just created. OR We can just put all the same user profile creation stuff into this class to simplify things...
  }
-
-
- public void writeComProfile() {
-  try {
-
-   DBConnect.getInstance();
-   conn = DriverManager.getConnection(URL, USER, PASS);
-   st = conn.createStatement();
-   System.out.println("Writing profile to database...");
-   String sql = "INSERT INTO profiles (volunteer_status) " +
-           "VALUES ('" + this.volunteerStatus + "');";
-   st.executeUpdate(sql);
-   System.out.println("Record inserted successfully");
-  } catch (Exception e) {
-   e.printStackTrace();
-  } finally {
-   if (conn != null) {
-    try {
-     conn.close();
-    } catch (SQLException e) {
-     e.printStackTrace();
-    }
-   }
-  }
- }
-
-
 
 
  // Used to create private events
