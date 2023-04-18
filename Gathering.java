@@ -25,7 +25,7 @@ public class Gathering {
     static final String PASS = "$TheHub2023$";
 
     public Gathering() {
-        System.out.print("When is the event?");
+        System.out.print("When is the event? Enter in DDMMYYYY Format..");
         try {
             this.date = Integer.parseInt(sc.nextLine());
         } catch (NumberFormatException e) {
@@ -78,8 +78,8 @@ public class Gathering {
             conn = DriverManager.getConnection(URL, USER, PASS);
             st = conn.createStatement();
             System.out.println("Writing event to database...");
-            String sql = "INSERT INTO events (date, host, event_name, event_type, description, all_ages, entry_fee, volunteers) " +
-                    "VALUES ('" + this.date + "', '" + this.hostName + "', '" + this.eventName + "', '" + this.eventType + "', '" + this.description + "', '" + this.allAges + "', '" + this.entryFee + "', '" + this.volunteersWanted + "');";
+            String sql = "INSERT INTO events (date, host, event_name, location, event_type, description, all_ages, entry_fee, volunteers) " +
+                    "VALUES ('" + this.date + "', '" + this.hostName + "', '" + this.eventName + "', '" + this.location + "', '" + this.eventType + "', '" + this.description + "', '" + this.allAges + "', '" + this.entryFee + "', '" + this.volunteersWanted + "');";
             st.executeUpdate(sql);
             System.out.println("Record inserted successfully");
         } catch (Exception e) {

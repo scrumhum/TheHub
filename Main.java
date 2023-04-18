@@ -1,5 +1,3 @@
-import java.net.CookieHandler;
-
 public class Main {
 
     public static void main(String[] args) {
@@ -9,9 +7,10 @@ public class Main {
 
         //Gathering event = new Gathering();
 
-        //UserInterface user = new User();
+        //User user = new User();
+        //user.getUserName("1234567890");
 
-        Admin admin = new Admin();
-
+        //Admin admin = new Admin();
+        //admin.authenticate("snipsnip","myfacehurts");
     }
 }

@@ -1,7 +1,7 @@
 import java.sql.*;
 import java.util.Scanner;
 
-public class User implements UserInterface {
+public class User {
     public String firstName, lastName, username, password, gender, email, bio, location;
 
     public long phoneNumber;
@@ -9,7 +9,8 @@ public class User implements UserInterface {
     public int authorizationLevel;
     public String volunteerStatus;
     Scanner sc = new Scanner(System.in);
-    DBConnect connect = new DBConnect();
+
+    DBConnect connect = DBConnect.getInstance();
 
     public  static Connection conn = null;
     Statement st = null;
@@ -21,7 +22,6 @@ public class User implements UserInterface {
     static final String PASS = "$TheHub2023$";
 
 
-    //TODO update this class to correctly obtain auth level from user and see if I need to add new code for adding volunteer status to DB.
     public User() {
 
         System.out.print("Joining as Gathering Manager? Press 1.\nJoining as a Community Member? Press 2.");
@@ -162,7 +162,6 @@ public class User implements UserInterface {
     public void writeProfile() {
         try {
             System.out.println("Trying to connect");
-            DBConnect connect = DBConnect.getInstance();
             connect.dbConnect();
             conn = DriverManager.getConnection(URL, USER, PASS);
             st = conn.createStatement();
@@ -188,11 +187,16 @@ public class User implements UserInterface {
     }
 
     // get username
-    public static String getUserName(String phoneNumber) {
+    public String getUserName(String phoneNumber) {
         String username = null;
         try {
-            DBConnect.getInstance();
+            DBConnect connect = DBConnect.getInstance();
+            connect.dbConnect();
             conn = DriverManager.getConnection(URL, USER, PASS);
+            System.out.println("Doing something..");
+            st = conn.createStatement();
+            String sql = "USE thehub;";
+            st.executeUpdate(sql);
             PreparedStatement st = conn.prepareStatement("SELECT username FROM profiles WHERE phone_number=?");
             st.setString(1, phoneNumber);
             ResultSet rs = st.executeQuery();
@@ -497,7 +501,6 @@ public class User implements UserInterface {
         try {
 
             connect.dbConnect();
-
             System.out.print("Enter your Email: ");
             this.email = sc.nextLine();
             System.out.print("Enter your updated First Name: ");

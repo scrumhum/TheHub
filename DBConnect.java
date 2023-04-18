@@ -32,6 +32,8 @@ public class DBConnect {
             st = conn.createStatement();
             Class.forName(DRIVER);
             System.out.println("Connecting to database...");
+            String sql = "USE thehub;";
+            st.executeUpdate(sql);
         } catch (Exception e) {
             e.printStackTrace();
         }
