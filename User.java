@@ -1,7 +1,7 @@
 import java.sql.*;
 import java.util.Scanner;
 
-public class User implements UserInterface {
+public class User {
     public String firstName, lastName, username, password, gender, email, bio, location;
 
     public long phoneNumber;
