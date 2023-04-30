@@ -6,91 +6,253 @@
 	<meta http-equiv="content-language" content="en" />
 	<meta charset="utf-8"/>
 	<script defer src="scripts/hub.js"></script>
+	<script type="text/javascript" src="scripts/purify.min.js"></script>
 	<link rel="shortcut icon" type="image/svg" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23000' d='m8 13 0-10-8 0 0 10zm-7-9 6 0 0 2-2 0 0 6-2 0 0-6-2 0zm12 8 0-3-2 0 0 3-2 0 0-8 2 0 0 3 2 0 0-3 2 0 0 8zm-13-12m16 16'/%3E%3C/svg%3E"/>
 	<link rel="stylesheet" type="text/css" href="css/reset.css"/>
 	<link rel="stylesheet" type="text/css" href="css/hub.css"/>
 	<link rel="stylesheet" type="text/css" href="css/logo_animation.css"/>
 </head>
 <body>
-	<header>
-		<div class="left_options_container">
-			<div class="sIcon"></div>
-			<div class="sIcon"></div>
-			<div class="sIcon"></div>
-			<div class="sIcon"></div>
-		</div>
-		<a onclick="home()">
-			<svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 53 53">
+<div style="display:none;" id="_data_"></div>
+<header>
+	<div class="left_options_container">
+		<div class="sIcon"></div>
+		<div class="sIcon"></div>
+		<div class="sIcon"></div>
+		<div class="sIcon"></div>
+	</div>
+	<a onclick="home()">
+		<svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 53 53">
+			<g>
+				<path class="logoText_T" d="m0 0 0 17 17 0 0-17zm7 15 0-10-5 0 0-3 13 0 0 3-5 0 0 10z"/>
+				<path class="logoText_H" d="m0 0m2 2 0 13 3 0 0-5 7 0 0 5 3 0 0-13-3 0 0 5-7 0 0-5z"/>
+				<path class="logoText_E" d="m0 0 0 17 17 0 0-17zm15 12 0 3-13 0 0-13 13 0 0 3-10 0 0 2 7 0 0 2-7 0 0 3z"/>
+				<path class="logoText_U" d="m0 0 0 17 17 0 0-17zm15 2 0 13-13 0 0-13 3 0 0 10 7 0 0-10z"/>
+				<path class="logoText_B" d="m0 0m2 2 0 13 10 0c4 0 4-7 1-7 3 0 3-6-1-6zm3 2 5 0c3 0 3 3 0 3l-5 0zm0 9 0-3 5 0c3 0 3 3 0 3z"/>
+				<path class="logoText_Inner1" d="m0 0m2 2 13 0 0 13-13 0z"/>
+				<path class="logoText_Outer1" d="m0 17 0-17 17 0 0 17zm2-15 0 13 13 0 0-13z"/>
+				<path class="logoText_Inner2" d="m0 0m2 2 13 0 0 13-13 0z"/>
+				<path class="logoText_Outer2" d="m0 17 0-17 17 0 0 17zm2-15 0 13 13 0 0-13z"/>
+			</g>
+		</svg>
+	</a>
+	<div class="right_options_container">
+		<a class="nav bar" onclick="cp('_profile_');">
+			<svg class="sIcon" viewBox="-7 -3 40 40" xmlns="http://www.w3.org/2000/svg">
 				<g>
-					<path class="logoText_T" d="m0 0 0 17 17 0 0-17zm7 15 0-10-5 0 0-3 13 0 0 3-5 0 0 10z"/>
-					<path class="logoText_H" d="m0 0m2 2 0 13 3 0 0-5 7 0 0 5 3 0 0-13-3 0 0 5-7 0 0-5z"/>
-					<path class="logoText_E" d="m0 0 0 17 17 0 0-17zm15 12 0 3-13 0 0-13 13 0 0 3-10 0 0 2 7 0 0 2-7 0 0 3z"/>
-					<path class="logoText_U" d="m0 0 0 17 17 0 0-17zm15 2 0 13-13 0 0-13 3 0 0 10 7 0 0-10z"/>
-					<path class="logoText_B" d="m0 0m2 2 0 13 10 0c4 0 4-7 1-7 3 0 3-6-1-6zm3 2 5 0c3 0 3 3 0 3l-5 0zm0 9 0-3 5 0c3 0 3 3 0 3z"/>
-					<path class="logoText_Inner1" d="m0 0m2 2 13 0 0 13-13 0z"/>
-					<path class="logoText_Outer1" d="m0 17 0-17 17 0 0 17zm2-15 0 13 13 0 0-13z"/>
-					<path class="logoText_Inner2" d="m0 0m2 2 13 0 0 13-13 0z"/>
-					<path class="logoText_Outer2" d="m0 17 0-17 17 0 0 17zm2-15 0 13 13 0 0-13z"/>
+					<path d="M0 0 0 0M23 4C19 0 11 0 6 3 6 3 3 4 2 9 1 15 4 12 1 18-1 21 2 20 2 22 2 23 2 23 2 23 3 24 2 24 3 25 4 27 2 29 6 29 11 28 11 28 11 32 26 30 19 37 21 21 23 19 29 11 23 4ZM2 11C3 10 6 10 7 11 3 10 4 12 7 12 9 12 9 13 7 14 5 17 5 15 5 15 4 14 3 15 3 14 2 13 2 12 2 11ZM4 13C4 12 6 13 6 13 7 14 6 13 4 13ZM5 14A1 1 0 005 14C5 16 6 13 5 14ZM3 21C2 22 2 21 2 21 0 20 1 20 1 20 3 20 3 21 4 20ZM5 24C4.6667 23.3333 2 25 2 22 3 23 6 23 5 24ZM3 25C4 24 5 26 3 25Z"/>
 				</g>
 			</svg>
 		</a>
-		<div class="right_options_container">
-			<a class="nav bar" onclick="profile">
-				<svg class="sIcon" viewBox="-7 -3 40 40" xmlns="http://www.w3.org/2000/svg">
-					<g>
-						<path d="M0 0 0 0M23 4C19 0 11 0 6 3 6 3 3 4 2 9 1 15 4 12 1 18-1 21 2 20 2 22 2 23 2 23 2 23 3 24 2 24 3 25 4 27 2 29 6 29 11 28 11 28 11 32 26 30 19 37 21 21 23 19 29 11 23 4ZM2 11C3 10 6 10 7 11 3 10 4 12 7 12 9 12 9 13 7 14 5 17 5 15 5 15 4 14 3 15 3 14 2 13 2 12 2 11ZM4 13C4 12 6 13 6 13 7 14 6 13 4 13ZM5 14A1 1 0 005 14C5 16 6 13 5 14ZM3 21C2 22 2 21 2 21 0 20 1 20 1 20 3 20 3 21 4 20ZM5 24C4.6667 23.3333 2 25 2 22 3 23 6 23 5 24ZM3 25C4 24 5 26 3 25Z"/>
-					</g>
-				</svg>
-			</a>
-			<a class="nav bar" >
-				<svg class="sIcon" viewBox="10 -6 1 80" xmlns="http://www.w3.org/2000/svg">
-					<g>
-						<circle fill="rgb(255,0,0,1)" transform="translate(0 0)" cx="10" cy="10" r="10"/>
-						<circle fill="rgb(0,255,0,1)" transform="translate(0 24)" cx="10" cy="10" r="10"/>
-						<circle fill="rgb(0,0,255,1)" transform="translate(0 48)" cx="10" cy="10" r="10"/>
-					</g>
-				</svg>
-			</a>
-			<a class="nav bar" >
-				<svg class="sIcon" viewBox="-3 0 20 14" xmlns="http://www.w3.org/2000/svg">
-					<g>
-						<path d="M0 0 0 14 2 14 2 0ZM4 0 4 14 6 14 6 0 6 0ZM8 0 8 14 10 14 10 0ZM12 0 12 14 14 14 14 0Z"/>
-					</g>
-				</svg>
-			</a>
-			<a class="nav bar" onclick="settings()">
-				<svg class="sIcon" viewBox="-3 0 31 25" xmlns="http://www.w3.org/2000/svg">
-					<g>
-						<path d="m3 5 1 3-1 2-3 1 0 3 3 1 1 2-1 3 2 2 3-1 2 1 1 3 3 0 1-3 2-1 3 1 2-2-1-3 1-2 3-1 0-3-3-1-1-2 1-3-2-2-3 1-2-1-1-3-3 0-1 3-2 1-3-1zm4 2c8-7 18 4 11 11-8 7-18-4-11-11z"/>
-					</g>
-				</svg>
-			</a>
-		</div>
-	</header>
-	<aside display="none">
-		<nav>
-			<a class="nav subtitle" onclick="home()">Home</a>
-			<a class="nav subtitle" onclick="search()">Search</a>
-			<a class="nav subtitle" onclick="chat()">Chat</a>
-			<a class="nav subtitle" onclick="notifications()">Notifications</a>
-			<a class="nav subtitle" onclick="calendar()">Calendar</a>
-		</nav>
-	</aside>
-	<main>
-		<!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Convallis aenean et tortor at risus. Lorem donec massa sapien faucibus. Eget mi proin sed libero enim sed. Tellus orci ac auctor augue mauris augue. Posuere ac ut consequat semper viverra nam. Lacus sed turpis tincidunt id aliquet risus feugiat in ante. Laoreet id donec ultrices tincidunt arcu non sodales. Duis tristique sollicitudin nibh sit amet commodo. Sollicitudin ac orci phasellus egestas tellus rutrum tellus pellentesque.
-		</p>
-		<p>
-		Id interdum velit laoreet id donec ultrices. Porttitor rhoncus dolor purus non enim praesent. Tincidunt id aliquet risus feugiat in ante metus. Dolor sed viverra ipsum nunc aliquet bibendum enim. Nulla at volutpat diam ut venenatis tellus in metus. Ornare arcu odio ut sem nulla pharetra. Facilisis magna etiam tempor orci eu lobortis elementum nibh tellus. Arcu vitae elementum curabitur vitae nunc sed. Lacus luctus accumsan tortor posuere ac. Enim blandit volutpat maecenas volutpat. Nibh sit amet commodo nulla facilisi nullam vehicula ipsum. Orci eu lobortis elementum nibh. Eros donec ac odio tempor orci dapibus. Ante metus dictum at tempor commodo ullamcorper a lacus. Tempus iaculis urna id volutpat lacus. Non nisi est sit amet. Mauris vitae ultricies leo integer malesuada nunc vel risus. Pharetra massa massa ultricies mi.
-		</p>
-		<p>
-		Sit amet mauris commodo quis. Nec feugiat nisl pretium fusce id. Diam vulputate ut pharetra sit. Vitae nunc sed velit dignissim sodales ut eu. Enim sed faucibus turpis in eu mi bibendum neque. Diam vel quam elementum pulvinar etiam non quam lacus suspendisse. Amet nulla facilisi morbi tempus iaculis urna id volutpat lacus. Tincidunt vitae semper quis lectus nulla at volutpat. Curabitur vitae nunc sed velit dignissim sodales ut eu sem. Nulla pharetra diam sit amet nisl. Pellentesque sit amet porttitor eget dolor morbi non arcu. Pellentesque eu tincidunt tortor aliquam nulla. Tempor orci eu lobortis elementum nibh. Amet purus gravida quis blandit turpis cursus. Euismod nisi porta lorem mollis aliquam ut. Erat velit scelerisque in dictum. Diam quam nulla porttitor massa id neque. Sit amet nisl suscipit adipiscing bibendum. Vitae elementum curabitur vitae nunc sed velit dignissim. Id cursus metus aliquam eleifend mi in nulla posuere sollicitudin.
-		</p> -->
-	</main>
-	<div class="login background">
+		<a class="nav bar" onclick="bbox();">
+			<svg class="sIcon" viewBox="10 -6 1 80" xmlns="http://www.w3.org/2000/svg">
+				<g>
+					<circle fill="rgb(255,0,0,1)" transform="translate(0 0)" cx="10" cy="10" r="10"/>
+					<circle fill="rgb(0,255,0,1)" transform="translate(0 24)" cx="10" cy="10" r="10"/>
+					<circle fill="rgb(0,0,255,1)" transform="translate(0 48)" cx="10" cy="10" r="10"/>
+				</g>
+			</svg>
+		</a>
+		<a class="nav bar" >
+			<svg class="sIcon" viewBox="-3 0 20 14" xmlns="http://www.w3.org/2000/svg">
+				<g>
+					<path d="M0 0 0 14 2 14 2 0ZM4 0 4 14 6 14 6 0 6 0ZM8 0 8 14 10 14 10 0ZM12 0 12 14 14 14 14 0Z"/>
+				</g>
+			</svg>
+		</a>
+		<a class="nav bar" onclick="settings()">
+			<svg class="sIcon" viewBox="-3 0 31 25" xmlns="http://www.w3.org/2000/svg">
+				<g>
+					<path d="m3 5 1 3-1 2-3 1 0 3 3 1 1 2-1 3 2 2 3-1 2 1 1 3 3 0 1-3 2-1 3 1 2-2-1-3 1-2 3-1 0-3-3-1-1-2 1-3-2-2-3 1-2-1-1-3-3 0-1 3-2 1-3-1zm4 2c8-7 18 4 11 11-8 7-18-4-11-11z"/>
+				</g>
+			</svg>
+		</a>
+	</div>
+</header>
+<aside>
+	<nav>
+		<a class="nav subtitle" onclick="cp('_login_',true);">Login</a>
+		<a class="nav subtitle" onclick="cp('_search_');">Search</a>
+		<a class="nav subtitle" onclick="cp('_events_');">Events</a>
+		<a class="nav subtitle" onclick="cp('_calendar_');">Calendar</a>
+	</nav>
+</aside>
+<main id="content">
+	<div class="login background dynamic" id="_create_events_">
 		<div class="login screen">
 			<div class="login controls">
 				<div class="login close">
-					<div id="loginX" onclick="document.querySelector('.login.background').style.visibility='hidden';">
+					<div id="loginX" onclick="document.querySelector('#_create_events_').style.visibility='hidden';">
+						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32">
+							<g>
+								<path style="css stuff here" stroke="black" stroke-width="2" d="M 0 0 32 32 M 0 32 32 0" />
+							</g>
+						</svg>
+					</div>
+				</div>
+			</div>
+			<div style="display:flex;flex-direction:column;">
+				<input class="input login" type="text" id="etitle" name="etitle" placeholder="Title">
+				<input class="input login" type="text" id="edate" name="edate" placeholder="Date">
+				<input class="input login" type="text" id="etime" name="etime" placeholder="Time">
+				<input class="input login" type="text" id="erepeat" name="erepeat" placeholder="Repeat">
+				<input class="input login" type="text" id="uscope" name="escope" placeholder="Scope">
+				<input class="input login" type="text" id="epeople" name="epeople" placeholder="People">
+				<input class="input login" type="text" id="elocation" name="elocation" placeholder="Location">
+				<input class="input login" type="text" id="edescription" name="edescription" placeholder="Description">
+				<button class="input login" onclick="" >Create Event</button>
+			</div>
+		</div>
+	</div>
+	<div class="login background dynamic" id="_login_">
+		<div class="login screen">
+			<div class="login controls">
+				<div class="login close">
+					<div id="loginX" onclick="document.querySelector('#_login_').style.visibility='hidden';">
+						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32">
+							<g>
+								<path style="css stuff here" stroke="black" stroke-width="2" d="M 0 0 32 32 M 0 32 32 0" />
+							</g>
+						</svg>
+					</div>
+				</div>
+			</div>
+			<div class="login body">
+				<div id="logininfo">
+					<div id="loginwrap">
+						<div id="space-between">
+							<input class="input login" type="text" id="uname" name="uname" placeholder="Username">
+							<input class="input login" type="password" id="password" name="password" placeholder="Password">
+							<button class="input login" onclick="login()">login</button>
+							<button class="input login" onclick="cp('_signin_')">sign up</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="_profile_" class="dynamic">
+		<div class="profile page">
+			<div class="profile picture">
+				<div class="profile mask">
+					<img src="media/testimage.jpg" width="170px" height="170px"></img>
+				</div>
+				<div>
+					<button class="edit profile">edit profile</button>
+				</div>
+			</div>
+			<div class="user description">
+				<div class="cn_uname_">${username}</div><br>
+				<div class="cn_fname_">${firstname}</div>
+				<div class="cn_lname_">${lastname}</div>
+				<div class="cn_email_">${email}</div>
+				<div class="cn_userID_"></div>
+			</div>
+		</div>
+		<div class="profile description">
+			<div class="profile left">
+				${friends}
+			</div>
+			<div class="profile right">
+				<div>
+					${events}
+				</div>
+				<div>
+					${calendar}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="_profile_edit" class="dynamic">
+		<div class="profile page">
+			<div class="profile picture">
+				<div class="profile mask">
+					<img src="media/testimage.jpg" width="170px" height="170px"></img>
+				</div>
+				<div>
+					<button class="edit profile">edit profile</button>
+				</div>
+			</div>
+			<form>
+				<div class="user description">
+					<div>
+						<label for="username">Username:</label>
+						<input type="text" name="username" id="username" value="${username}">
+					</div>
+					<div>
+						<label for="firstname">First Name:</label>
+						<input type="text" name="firstname" id="firstname" value="${firstname}">
+					</div>
+					<div>
+						<label for="lastname">Last Name:</label>
+						<input type="text" name="lastname" id="lastname" value="${lastname}">
+					</div>
+					<div>
+						<label for="email">Email:</label>
+						<input type="email" name="email" id="email" value="${email}">
+					</div>
+					<div>
+						<label for="password">Password:</label>
+						<input type="password" name="password" id="password">
+					</div>
+					<div>
+						<input type="submit" value="Save Changes">
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="profile description">
+			<div class="profile left">
+				${friends}
+			</div>
+			<div class="profile right">
+				<div>
+					${events}
+				</div>
+				<div>
+					${calendar}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="search page dynamic" id="_search_">
+		<div class="search align">
+			<div class="search box">
+				<input class="search input" type="text" id="search" name="search">
+				<svg class="search enter" onclick="search()" id="search_enter" viewBox="-5 -5 30 30" xmlns="http://www.w3.org/2000/svg">
+					<g>
+						<path class="search icon" fill-opacity="0" stroke="black" stroke-width="2px" d="M 11.2426 11.3574 C 5.5858 17.0142 -2.8995 8.5289 2.7574 2.8721 C 8.4142 -2.7848 16.8995 5.7005 11.2426 11.3574 L 19.7279 19.8426">
+					</g>
+				</svg>
+			</div>
+		</div>
+		<div class="search align">
+			${searched events}
+		</div>
+	</div>
+	<div class="events page dynamic" id="_events_">
+		<div class="events format">
+			<div class="make events">
+				<button class="create events" onclick="cp('_create_events_',true)">Create Event</button>
+			</div>
+			<div>
+				${show events}
+			</div>
+		</div>
+	</div>
+	<div class="calendar page dynamic" id="_calendar_">
+		<div class="timeline">
+			${timeline}
+		</div>
+		<div class="calendar">
+			${calendar}
+		</div>
+	</div>
+	<div class="login background dynamic" id="_signin_">
+		<div class="login screen">
+			<div class="login controls">
+				<div class="login close">
+					<div id="loginX" onclick="document.querySelector('#_signin_').style.visibility='hidden';">
 						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 32 32">
 							<g>
 								<path style="css stuff here" stroke="black" stroke-width="2" d="M 0 0 32 32 M 0 32 32 0" />
@@ -104,43 +266,20 @@
 				<div id="logininfo">
 					<div id="loginwrap">
 						<div id="space-between">
-							<input class="input login" type="text" id="uname" name="uname" border="3px solid black">
-							<input class="input login" type="password" id="password" name="password">
-							<button class="input login">login</button>
-							<button class="input login">sign up</button>
+							<input class="input login" type="text" id="fname" name="fname" placeholder="First Name">
+							<input class="input login" type="text" id="lname" name="lname" placeholder="Last Name">
+							<input class="input login" type="text" id="email" name="email" placeholder="Email">
+							<input class="input login" type="text" id="signin_uname" name="uname" placeholder="Username">
+							<input class="input login" type="password" id="signin_password" name="password" placeholder="Password">
+							<input class="input login" type="password" id="confirm_password" name="password" placeholder="Confirm Password">
+							<button class="input login" onclick="ca();">sign up</button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="profile page">
-		<div class="profile picture">
-			<div class="profile mask">
-				<img src="media/testimage.jpg" width="170px" height="170px"></img>
-			</div>
-			<div>
-				<button class="edit profile">edit profile</button>
-			</div>
-		</div>
-		<div class="user description">
-			${username}<br>
-			${location}
-		</div>
-	</div>
-	<div class="profile description">
-		<div class="profile left">
-			${friends}
-		</div>
-		<div class="profile right">
-			<div>
-				${events}
-			</div>
-			<div> <!-- top padding here -->
-				${calendar}
-			</div>
-		</div>
-	</div>
-	<footer><p>0000 000000 000000 00</p></footer>
+</main>
+<footer><p>0000 000000 000000 00</p></footer>
 </body>
 </html>
